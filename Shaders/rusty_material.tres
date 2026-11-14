@@ -1,0 +1,10 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://bclkqi6pjx73k"]
+
+[ext_resource type="Shader" uid="uid://8pd1bbb0xlp5" path="res://Shaders/rusty_material.gdshader" id="1_chq8w"]
+
+[resource]
+shader = ExtResource("1_chq8w")
+shader_parameter/rust_color_dark = Color(0.25, 0.1, 0.05, 1)
+shader_parameter/rust_color_light = Color(0.65, 0.25, 0.05, 1)
+shader_parameter/rust_amount = 0.5
+shader_parameter/rust_roughness = 1.0

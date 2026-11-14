@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bl7flydpvn6ld"]
+
+[ext_resource type="Script" uid="uid://cdp521yqr7mct" path="res://GameBoard/Paths/path_node.gd" id="1_nqegp"]
+
+[sub_resource type="Gradient" id="Gradient_mpbjv"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.816, 0.892)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mpbjv"]
+gradient = SubResource("Gradient_mpbjv")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+
+[node name="Path node" type="Sprite2D" unique_id=1834182800]
+texture = SubResource("GradientTexture2D_mpbjv")
+script = ExtResource("1_nqegp")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=1881968903]
+z_as_relative = false

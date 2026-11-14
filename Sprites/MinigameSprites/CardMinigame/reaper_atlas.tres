@@ -1,0 +1,6 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://b1ij7xy88qq6l"]
+
+[ext_resource type="Texture2D" uid="uid://cphl45l1x2syy" path="res://Sprites/MinigameSprites/CardMinigame/Reaper.png" id="1_34po6"]
+
+[resource]
+atlas = ExtResource("1_34po6")

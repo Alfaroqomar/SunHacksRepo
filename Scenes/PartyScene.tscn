@@ -1,0 +1,783 @@
+[gd_scene format=3 uid="uid://bide13jrm2qcp"]
+
+[ext_resource type="Texture2D" uid="uid://bmlwi1lt40ijh" path="res://Sprites/MinigameSprites/CardMinigame/Background.png" id="1_6mql1"]
+[ext_resource type="Script" uid="uid://clvyp2qwlmuf1" path="res://Scripts/LobbyManager.gd" id="1_vk573"]
+[ext_resource type="Texture2D" uid="uid://cchehxlnhgbm3" path="res://addons/at-icons/node/arrows_counterclockwise.svg" id="2_ucoc3"]
+[ext_resource type="Texture2D" uid="uid://bdy5u62xnfix7" path="res://addons/at-icons/node/chair.svg" id="3_0rtbq"]
+[ext_resource type="Texture2D" uid="uid://dy3j76usiinl8" path="res://addons/at-icons/node2d/arrows_counterclockwise.svg" id="3_fgrvh"]
+[ext_resource type="Texture2D" uid="uid://0h5333wbuacd" path="res://addons/at-icons/node2d/chair.svg" id="4_gm3h4"]
+[ext_resource type="Texture2D" uid="uid://duh4rk61yugxi" path="res://addons/at-icons/mesh/arrows_counterclockwise.svg" id="4_wsmum"]
+[ext_resource type="FontFile" uid="uid://baknr2y3q4228" path="res://Fonts/Dreadful-Regular.otf" id="5_4vga6"]
+[ext_resource type="Texture2D" uid="uid://dtgt0217j31l1" path="res://addons/at-icons/mesh/chair.svg" id="7_0hj0q"]
+[ext_resource type="Texture2D" uid="uid://0b4wsfgkvadr" path="res://addons/at-icons/node3d/arrow_x.svg" id="8_fgrvh"]
+[ext_resource type="Texture2D" uid="uid://b3gglwjddwpfl" path="res://addons/at-icons/node/circle.svg" id="8_wsmum"]
+[ext_resource type="Script" uid="uid://dv11n7pprt18s" path="res://Scenes/name_edit.gd" id="10_0hj0q"]
+[ext_resource type="Shader" uid="uid://8pd1bbb0xlp5" path="res://Shaders/rusty_material.gdshader" id="11_6mql1"]
+[ext_resource type="FontFile" uid="uid://bclpfvxlfd8hx" path="res://Fonts/Dreadful-Rust.otf" id="11_js3sq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_07xbd"]
+bg_color = Color(0.8346143, 0.8346143, 0.8346143, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wsmum"]
+bg_color = Color(0.40912753, 0.6185106, 0.83118504, 1)
+corner_radius_top_left = 5
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_js3sq"]
+content_margin_left = 5.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_07xbd"]
+content_margin_left = 5.0
+content_margin_top = 2.0
+content_margin_right = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fgrvh"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bwsec"]
+shader = ExtResource("11_6mql1")
+shader_parameter/base_color = Color(0.19607843, 0.1882353, 0.19215687, 1)
+shader_parameter/grain_strength = 0.10000000475
+shader_parameter/grain_scale = 3.3330001345675
+shader_parameter/animated = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ist6e"]
+bg_color = Color(1, 0.8862745, 0.72156864, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0hj0q"]
+bg_color = Color(0.8352941, 0.8352941, 0.8352941, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_4vga6"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4vga6"]
+bg_color = Color(0.21710119, 0.21710122, 0.2171011, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="PartyScene" type="Control" unique_id=149004852]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="TextureRect" parent="." unique_id=1378342543]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_6mql1")
+
+[node name="Node" type="Node" parent="." unique_id=12997358 node_paths=PackedStringArray("lobby_list", "lobbiesText", "status_label", "create_menu", "lobby_name_input", "lobby_password_input", "lobby_players_input", "lobby_create_status", "default_lobby_listing", "join_password_panel", "join_password_input", "join_password_submit_button", "lobby_viewer", "lobby_viewer_players", "lobby_name_label", "start_lobby_button")]
+script = ExtResource("1_vk573")
+lobby_list = NodePath("../LobbyContainer")
+lobbiesText = NodePath("../LobbiesText")
+status_label = NodePath("../LobbiesText/StatusText")
+create_menu = NodePath("../LobbyCreateMenu")
+lobby_name_input = NodePath("../LobbyCreateMenu/VBoxContainer/LobbyNameRow/LobbyNameInput")
+lobby_password_input = NodePath("../LobbyCreateMenu/VBoxContainer/LobbyPassword/LobbyPasswordInput")
+lobby_players_input = NodePath("../LobbyCreateMenu/VBoxContainer/LobbyPlayers/LobbyPlayersInput")
+lobby_create_status = NodePath("../LobbyCreateMenu/LobbyCreateStatus")
+default_lobby_listing = NodePath("../LobbyContainer/DefaultLobbyListing")
+join_password_panel = NodePath("../JoinPasswordPanel")
+join_password_input = NodePath("../JoinPasswordPanel/JoinPasswordPrompt/JoinPasswordInput")
+join_password_submit_button = NodePath("../JoinPasswordPanel/SubmitPasswordButton")
+lobby_viewer = NodePath("../LobbyViewer")
+lobby_viewer_players = NodePath("../LobbyViewer/LobbyPlayersLabel")
+lobby_name_label = NodePath("../LobbyViewer/LobbyNameLabel")
+debug = true
+start_lobby_button = NodePath("../LobbyViewer/HBoxContainer/StartLobbyButton")
+
+[node name="LobbiesText" type="RichTextLabel" parent="." unique_id=831095532]
+custom_minimum_size = Vector2(200, 0)
+clip_contents = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.05
+anchor_right = 0.5
+anchor_bottom = 0.05
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+text = "Lobbies:"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StatusText" type="RichTextLabel" parent="LobbiesText" unique_id=2140360977]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -75.0
+offset_top = 10.0
+offset_right = 75.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Status:"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RefreshLobbies" type="TextureButton" parent="." unique_id=333810697]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.9
+anchor_right = 0.9
+offset_left = -100.0
+offset_top = 40.0
+offset_right = -60.0
+offset_bottom = 80.0
+grow_horizontal = 0
+texture_normal = ExtResource("2_ucoc3")
+texture_pressed = ExtResource("3_fgrvh")
+texture_hover = ExtResource("4_wsmum")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="RefreshLobbies" unique_id=1068262949]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+text = "Refresh Lobbies"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LobbyContainer" type="VBoxContainer" parent="." unique_id=1678582500]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.6
+anchor_right = 0.5
+anchor_bottom = 0.6
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DefaultLobbyListing" type="MarginContainer" parent="LobbyContainer" unique_id=1851385473]
+visible = false
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Panel" type="Panel" parent="LobbyContainer/DefaultLobbyListing" unique_id=1173371912]
+layout_mode = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_07xbd")
+
+[node name="JoinLobbyButton" type="Button" parent="LobbyContainer/DefaultLobbyListing/Panel" unique_id=1059351328]
+custom_maximum_size = Vector2(50, 25)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_top = -50.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.9955804, 0.99558026, 0.99558026, 1)
+theme_override_fonts/font = ExtResource("5_4vga6")
+theme_override_font_sizes/font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxFlat_wsmum")
+text = "Join"
+
+[node name="PlayerNamesLabel" type="RichTextLabel" parent="LobbyContainer/DefaultLobbyListing/Panel" unique_id=1715388529]
+modulate = Color(0, 0, 0, 1)
+custom_maximum_size = Vector2(300, 30)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -70.0
+offset_right = 500.0
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_js3sq")
+text = "Players: "
+scroll_active = false
+
+[node name="LobbyNameLabel" type="RichTextLabel" parent="LobbyContainer/DefaultLobbyListing" unique_id=936404848]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_07xbd")
+bbcode_enabled = true
+text = "Lobby Name"
+
+[node name="PlayersLabel" type="RichTextLabel" parent="LobbyContainer/DefaultLobbyListing" unique_id=236626687]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_styles/normal = SubResource("StyleBoxEmpty_07xbd")
+bbcode_enabled = true
+text = "1/4 Players"
+horizontal_alignment = 2
+
+[node name="CreateButton" type="TextureButton" parent="." unique_id=2066615740]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.06
+anchor_right = 0.06
+offset_left = 100.0
+offset_top = 40.0
+offset_right = 140.0
+offset_bottom = 80.0
+texture_normal = ExtResource("3_0rtbq")
+texture_pressed = ExtResource("4_gm3h4")
+texture_hover = ExtResource("7_0hj0q")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CreateButton" unique_id=1196164682]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_right = 50.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+text = "Create Room"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LobbyCreateMenu" type="Panel" parent="." unique_id=1606039434]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.15
+anchor_right = 0.75
+anchor_bottom = 0.85
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LobbyCreateMenu" unique_id=61497150]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_right = 0.85
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+alignment = 1
+
+[node name="LobbyNameRow" type="HBoxContainer" parent="LobbyCreateMenu/VBoxContainer" unique_id=104388743]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(-1, 35)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LobbyNameLabel" type="RichTextLabel" parent="LobbyCreateMenu/VBoxContainer/LobbyNameRow" unique_id=368655602]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Lobby Name:"
+scroll_active = false
+vertical_alignment = 1
+
+[node name="LobbyNameInput" type="LineEdit" parent="LobbyCreateMenu/VBoxContainer/LobbyNameRow" unique_id=2088619410]
+custom_maximum_size = Vector2(200, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.62967414, 0.62967503, 0.6296743, 0.6)
+theme_override_styles/normal = SubResource("StyleBoxFlat_fgrvh")
+placeholder_text = "Name..."
+max_length = 20
+caret_blink = true
+
+[node name="LobbyPassword" type="HBoxContainer" parent="LobbyCreateMenu/VBoxContainer" unique_id=1526152292]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(-1, 35)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LobbyPasswordLabel" type="RichTextLabel" parent="LobbyCreateMenu/VBoxContainer/LobbyPassword" unique_id=1262526329]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Lobby Password:"
+scroll_active = false
+vertical_alignment = 1
+
+[node name="LobbyPasswordInput" type="LineEdit" parent="LobbyCreateMenu/VBoxContainer/LobbyPassword" unique_id=903577256]
+custom_maximum_size = Vector2(200, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.62967414, 0.62967503, 0.6296743, 0.6)
+theme_override_styles/normal = SubResource("StyleBoxFlat_fgrvh")
+placeholder_text = "Password..."
+max_length = 20
+caret_blink = true
+secret = true
+
+[node name="LobbyPlayers" type="HBoxContainer" parent="LobbyCreateMenu/VBoxContainer" unique_id=311913986]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(-1, 35)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="LobbyPlayersLabel" type="RichTextLabel" parent="LobbyCreateMenu/VBoxContainer/LobbyPlayers" unique_id=604936587]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Lobby Players:"
+scroll_active = false
+vertical_alignment = 1
+
+[node name="LobbyPlayersInput" type="OptionButton" parent="LobbyCreateMenu/VBoxContainer/LobbyPlayers" unique_id=848580983]
+custom_maximum_size = Vector2(50, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_fgrvh")
+alignment = 1
+selected = 2
+item_count = 3
+popup/item_0/text = "2"
+popup/item_0/id = 0
+popup/item_1/text = "3"
+popup/item_1/id = 1
+popup/item_2/text = "4"
+popup/item_2/id = 2
+
+[node name="LobbyRounds" type="HBoxContainer" parent="LobbyCreateMenu/VBoxContainer" unique_id=1691768907]
+visible = false
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(-1, 35)
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="LobbyPlayersLabel" type="RichTextLabel" parent="LobbyCreateMenu/VBoxContainer/LobbyRounds" unique_id=1796957932]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Lobby Rounds:"
+scroll_active = false
+vertical_alignment = 1
+
+[node name="LobbyPlayersInput" type="OptionButton" parent="LobbyCreateMenu/VBoxContainer/LobbyRounds" unique_id=340781562]
+custom_maximum_size = Vector2(50, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_fgrvh")
+alignment = 1
+selected = 3
+item_count = 4
+popup/item_0/text = "15"
+popup/item_0/id = 0
+popup/item_1/text = "20"
+popup/item_1/id = 1
+popup/item_2/text = "25"
+popup/item_2/id = 2
+popup/item_3/text = "30"
+popup/item_3/id = 3
+
+[node name="CreateLobbyButton" type="Button" parent="LobbyCreateMenu" unique_id=797791265]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.9
+anchor_right = 0.5
+anchor_bottom = 0.9
+offset_left = -30.0
+offset_top = -31.0
+offset_right = 30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_4vga6")
+theme_override_font_sizes/font_size = 30
+text = "Create"
+
+[node name="LobbyCreateStatus" type="RichTextLabel" parent="LobbyCreateMenu" unique_id=612536659]
+self_modulate = Color(0.34468886, 0.25703084, 0.8125794, 1)
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="LobbyCreateMenu" unique_id=411723356]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0.5, -0.5)
+offset_transform_visual_only = false
+mouse_filter = 2
+texture = ExtResource("8_wsmum")
+
+[node name="CloseLobbyCreateButton" type="TextureButton" parent="LobbyCreateMenu" unique_id=1214148651]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+offset_transform_enabled = true
+offset_transform_position_ratio = Vector2(0.5, -0.5)
+offset_transform_visual_only = false
+texture_normal = ExtResource("8_fgrvh")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="LobbyViewer" type="Panel" parent="." unique_id=1246638120]
+visible = false
+material = SubResource("ShaderMaterial_bwsec")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.15
+anchor_right = 0.75
+anchor_bottom = 0.85
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ist6e")
+
+[node name="LobbyNameLabel" type="RichTextLabel" parent="LobbyViewer" unique_id=1944192048]
+self_modulate = Color(1, 0.8862745, 0.72156864, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.05
+anchor_right = 0.5
+anchor_bottom = 0.05
+offset_left = -140.99998
+offset_right = 141.0
+offset_bottom = 71.119995
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("11_js3sq")
+theme_override_font_sizes/normal_font_size = 50
+bbcode_enabled = true
+text = "Lobby Name"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LobbyPlayersLabel" type="RichTextLabel" parent="LobbyViewer" unique_id=1000414465]
+self_modulate = Color(1, 0.8862745, 0.72156864, 1)
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.25
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 229.4
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Players:"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="LobbyViewer" unique_id=1435999639]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.9
+anchor_right = 0.5
+anchor_bottom = 0.9
+offset_left = -48.0
+offset_top = -40.0
+offset_right = 48.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 30
+
+[node name="LeaveLobbyButton" type="Button" parent="LobbyViewer/HBoxContainer" unique_id=925287088]
+self_modulate = Color(1, 0.8862745, 0.72156864, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_4vga6")
+theme_override_font_sizes/font_size = 30
+text = "Leave"
+
+[node name="StartLobbyButton" type="Button" parent="LobbyViewer/HBoxContainer" unique_id=466236593]
+self_modulate = Color(1, 0.8862745, 0.72156864, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("5_4vga6")
+theme_override_font_sizes/font_size = 30
+text = "Start"
+
+[node name="LobbyCreateStatus" type="RichTextLabel" parent="LobbyViewer" unique_id=779741122]
+self_modulate = Color(0.34468886, 0.25703084, 0.8125794, 1)
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="JoinPasswordPanel" type="Panel" parent="." unique_id=2077887282]
+visible = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="JoinPasswordPrompt" type="HBoxContainer" parent="JoinPasswordPanel" unique_id=12955511]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -31.0
+offset_right = 200.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="JoinPasswordLabel" type="RichTextLabel" parent="JoinPasswordPanel/JoinPasswordPrompt" unique_id=943133250]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Lobby Password:"
+scroll_active = false
+vertical_alignment = 1
+
+[node name="JoinPasswordInput" type="LineEdit" parent="JoinPasswordPanel/JoinPasswordPrompt" unique_id=1989466803]
+custom_maximum_size = Vector2(200, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.62967414, 0.62967503, 0.6296743, 0.6)
+theme_override_styles/normal = SubResource("StyleBoxFlat_fgrvh")
+placeholder_text = "Password..."
+max_length = 20
+caret_blink = true
+secret = true
+
+[node name="Name" type="HBoxContainer" parent="JoinPasswordPanel" unique_id=1956507547]
+visible = false
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.25
+anchor_right = 0.5
+anchor_bottom = 0.25
+offset_left = -200.0
+offset_top = -31.0
+offset_right = 200.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="JoinPasswordLabel" type="RichTextLabel" parent="JoinPasswordPanel/Name" unique_id=789926533]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/normal_font = ExtResource("5_4vga6")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Lobby Name:"
+scroll_active = false
+vertical_alignment = 1
+
+[node name="JoinPasswordInput" type="LineEdit" parent="JoinPasswordPanel/Name" unique_id=744794176]
+custom_maximum_size = Vector2(200, -1)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_placeholder_color = Color(0.62967414, 0.62967503, 0.6296743, 0.6)
+theme_override_styles/normal = SubResource("StyleBoxFlat_fgrvh")
+placeholder_text = "Name..."
+max_length = 20
+caret_blink = true
+secret = true
+
+[node name="SubmitPasswordButton" type="Button" parent="JoinPasswordPanel" unique_id=1259658856]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_4vga6")
+theme_override_font_sizes/font_size = 30
+text = "Submit"
+
+[node name="GameName" type="Panel" parent="." unique_id=2033674681]
+visible = false
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 23.0
+offset_top = -119.0
+offset_right = 256.0
+offset_bottom = -34.0
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0hj0q")
+
+[node name="CenterContainer" type="CenterContainer" parent="GameName" unique_id=703442014]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameName/CenterContainer" unique_id=187288472]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="GameName/CenterContainer/VBoxContainer" unique_id=449749880]
+layout_mode = 2
+text = "Player Name"
+label_settings = SubResource("LabelSettings_4vga6")
+horizontal_alignment = 1
+
+[node name="NameEdit" type="LineEdit" parent="GameName/CenterContainer/VBoxContainer" unique_id=1070312124]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_4vga6")
+placeholder_text = "Input Name"
+alignment = 1
+max_length = 16
+script = ExtResource("10_0hj0q")
+
+[node name="Button" type="Button" parent="GameName" unique_id=1981676027]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -4.0
+offset_top = -8.0
+offset_right = 4.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("5_4vga6")
+theme_override_font_sizes/font_size = 30
+text = "Enter"
+
+[connection signal="pressed" from="RefreshLobbies" to="Node" method="_on_refresh_lobbies_pressed"]
+[connection signal="pressed" from="CreateButton" to="Node" method="_on_create_button_pressed"]
+[connection signal="pressed" from="LobbyCreateMenu/CreateLobbyButton" to="Node" method="_on_create_lobby_button_pressed"]
+[connection signal="pressed" from="LobbyCreateMenu/CloseLobbyCreateButton" to="Node" method="_on_close_lobby_create_button_pressed"]
+[connection signal="pressed" from="LobbyViewer/HBoxContainer/LeaveLobbyButton" to="Node" method="_on_leave_lobby_button_pressed"]
+[connection signal="pressed" from="LobbyViewer/HBoxContainer/StartLobbyButton" to="Node" method="_on_start_lobby_button_pressed"]
+[connection signal="editing_toggled" from="GameName/CenterContainer/VBoxContainer/NameEdit" to="GameName/CenterContainer/VBoxContainer/NameEdit" method="_on_editing_toggled"]

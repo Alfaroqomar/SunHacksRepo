@@ -1,0 +1,410 @@
+[gd_scene format=3 uid="uid://c5rx4r6yews3j"]
+
+[ext_resource type="Script" uid="uid://bhmesbsb5jlt" path="res://GameBoard/game_manager.gd" id="1_mpbjv"]
+[ext_resource type="PackedScene" uid="uid://bl7flydpvn6ld" path="res://GameBoard/path_node.tscn" id="2_7h4yy"]
+[ext_resource type="Script" uid="uid://2n6bdxd6ufrq" path="res://GameBoard/game_board_ui.gd" id="2_uf2ho"]
+[ext_resource type="PackedScene" uid="uid://c6ie75je2w2mp" path="res://GameBoard/Player/player.tscn" id="3_mpbjv"]
+[ext_resource type="PackedScene" uid="uid://bku7aixxqpa3e" path="res://Scenes/Minigame.tscn" id="4_jlb8u"]
+[ext_resource type="FontFile" uid="uid://baknr2y3q4228" path="res://Fonts/Dreadful-Regular.otf" id="5_7tv75"]
+[ext_resource type="Script" uid="uid://bhexx6mj1xv3q" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="5_8g0wi"]
+[ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="6_7tv75"]
+[ext_resource type="Texture2D" uid="uid://cphl45l1x2syy" path="res://Sprites/MinigameSprites/CardMinigame/Reaper.png" id="6_esptt"]
+[ext_resource type="Texture2D" uid="uid://buuk3ygu8ousu" path="res://Sprites/Gamejam_gameboard_3.png" id="8_esptt"]
+
+[sub_resource type="Resource" id="Resource_uf2ho"]
+script = ExtResource("6_7tv75")
+
+[sub_resource type="LabelSettings" id="LabelSettings_15q4e"]
+font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7tv75"]
+bg_color = Color(0.11504955, 0.10950158, 0.112275906, 0.42745098)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.5686275, 0, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_g4v7s"]
+font_size = 32
+
+[node name="Test board" type="Node2D" unique_id=1521796598 groups=["GameBoard"]]
+
+[node name="PhantomCamera2D" type="Node2D" parent="." unique_id=677184524]
+top_level = true
+position = Vector2(324, -90)
+script = ExtResource("5_8g0wi")
+follow_mode = 2
+tween_resource = SubResource("Resource_uf2ho")
+metadata/_custom_type_script = "uid://bhexx6mj1xv3q"
+
+[node name="Camera2D" type="Camera2D" parent="PhantomCamera2D" unique_id=896443355]
+
+[node name="Board Manager" type="Node" parent="." unique_id=1867770487 node_paths=PackedStringArray("StartPathNode", "default_player", "current_player_label", "reaper_chud", "coins_and_shards_label") groups=["BoardManager"]]
+script = ExtResource("1_mpbjv")
+StartPathNode = NodePath("../Board Paths/Path node")
+default_player = NodePath("../Player")
+current_player_label = NodePath("../UI/CurrentPlayerLabel")
+reaper_chud = NodePath("../UI/CurrentPlayerLabel/ReaperChud")
+coins_and_shards_label = NodePath("../UI/PlayerCoins")
+minigame_pool = Array[PackedScene]([ExtResource("4_jlb8u")])
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1567388065]
+script = ExtResource("2_uf2ho")
+
+[node name="Player buttons" type="Panel" parent="UI" unique_id=96347243]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.85
+anchor_right = 0.5
+anchor_bottom = 0.85
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="UI/Player buttons" unique_id=1174526682]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Player buttons/MarginContainer" unique_id=1556598833]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="UI/Player buttons/MarginContainer/VBoxContainer" unique_id=2099917828]
+layout_mode = 2
+text = "Roll and Move"
+
+[node name="Button2" type="Button" parent="UI/Player buttons/MarginContainer/VBoxContainer" unique_id=377427668]
+layout_mode = 2
+text = "Item"
+
+[node name="Control" type="Control" parent="UI" unique_id=1366295195]
+visible = false
+layout_mode = 3
+anchor_right = 0.16600001
+anchor_bottom = 0.19900002
+offset_right = -0.23200989
+offset_bottom = 0.04798889
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="UI/Control" unique_id=2043095577]
+layout_mode = 0
+offset_left = 25.0
+offset_top = 8.0
+offset_right = 219.0
+offset_bottom = 145.0
+text = "Player # 
+rolled #"
+label_settings = SubResource("LabelSettings_15q4e")
+
+[node name="Turn counter" type="Panel" parent="UI" unique_id=1760881030]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -163.0
+offset_top = 18.0
+offset_right = -31.0
+offset_bottom = 116.0
+grow_horizontal = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_7tv75")
+
+[node name="Label" type="Label" parent="UI/Turn counter" unique_id=1904335832]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 11.0
+offset_top = 8.0
+offset_right = -11.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "TURNS
+0/#"
+label_settings = SubResource("LabelSettings_g4v7s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrentPlayerLabel" type="RichTextLabel" parent="UI" unique_id=160850296]
+self_modulate = Color(0.89411765, 0.80784315, 0.8980392, 1)
+anchors_preset = -1
+anchor_left = 0.25
+anchor_right = 0.75
+anchor_bottom = 0.15
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("5_7tv75")
+theme_override_font_sizes/normal_font_size = 56
+bbcode_enabled = true
+text = "Player:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ReaperChud" type="TextureRect" parent="UI/CurrentPlayerLabel" unique_id=1568611932]
+layout_mode = 1
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(2, 2)
+texture = ExtResource("6_esptt")
+expand_mode = 1
+stretch_mode = 4
+
+[node name="PlayerCoins" type="RichTextLabel" parent="UI" unique_id=1915165167]
+self_modulate = Color(0.9874546, 0.81067497, 0.5074535, 1)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -124.0
+offset_right = 730.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/normal_font = ExtResource("5_7tv75")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "Player:"
+vertical_alignment = 1
+
+[node name="Player" parent="." unique_id=620793224 instance=ExtResource("3_mpbjv")]
+visible = false
+position = Vector2(883, 381)
+
+[node name="Player2" parent="." unique_id=1448953184 instance=ExtResource("3_mpbjv")]
+visible = false
+
+[node name="Sprite2D" parent="Player2" index="0" unique_id=397215277]
+modulate = Color(1, 0, 1, 1)
+
+[node name="Player3" parent="." unique_id=1665671484 instance=ExtResource("3_mpbjv")]
+visible = false
+position = Vector2(686, 429)
+
+[node name="Sprite2D" parent="Player3" index="0" unique_id=397215277]
+self_modulate = Color(0, 1, 1, 1)
+
+[node name="Board Paths" type="Node2D" parent="." unique_id=1295584622]
+z_index = -5
+
+[node name="Sprite2D2" type="Sprite2D" parent="Board Paths" unique_id=1193625128]
+position = Vector2(805, -163)
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("8_esptt")
+
+[node name="Sprite2D" type="Sprite2D" parent="Board Paths" unique_id=358532041]
+position = Vector2(805, -163)
+texture = ExtResource("8_esptt")
+
+[node name="Path node" parent="Board Paths" unique_id=1834182800 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(-103, -56)
+PathsAhead = [NodePath("../Path node2")]
+
+[node name="Path node2" parent="Board Paths" unique_id=354784487 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(-7, -373)
+TileType = 1
+PathsAhead = [NodePath("../Path node3")]
+
+[node name="Path node3" parent="Board Paths" unique_id=4713761 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(211, -638)
+TileType = 14
+PathsAhead = [NodePath("../Path node4"), NodePath("../Path node5")]
+
+[node name="Path node4" parent="Board Paths" unique_id=477840442 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(586, -666)
+TileType = 1
+PathsAhead = [NodePath("../Path node31")]
+
+[node name="Path node5" parent="Board Paths" unique_id=1113549621 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(13, -875)
+TileType = 3
+PathsAhead = [NodePath("../Path node6")]
+
+[node name="Path node6" parent="Board Paths" unique_id=439540346 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(138, -1111)
+PathsAhead = [NodePath("../Path node7")]
+
+[node name="Path node7" parent="Board Paths" unique_id=350903053 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(442, -1154)
+TileType = 1
+PathsAhead = [NodePath("../Path node8")]
+
+[node name="Path node8" parent="Board Paths" unique_id=1574433232 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(767, -1055)
+TileType = 4
+PathsAhead = [NodePath("../Path node9")]
+
+[node name="Path node9" parent="Board Paths" unique_id=1976661691 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1070, -855)
+TileType = 5
+PathsAhead = [NodePath("../Path node10"), NodePath("../Path node11")]
+
+[node name="Path node10" parent="Board Paths" unique_id=1232231595 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1230, -679)
+TileType = 3
+PathsAhead = [NodePath("../Path node14")]
+
+[node name="Path node11" parent="Board Paths" unique_id=1241283521 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1258, -1009)
+TileType = 1
+PathsAhead = [NodePath("../Path node12")]
+
+[node name="Path node12" parent="Board Paths" unique_id=1563966253 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1518, -1015)
+TileType = 14
+PathsAhead = [NodePath("../Path node13")]
+
+[node name="Path node13" parent="Board Paths" unique_id=787642006 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1697, -773)
+TileType = 3
+PathsAhead = [NodePath("../Path node14")]
+
+[node name="Path node14" parent="Board Paths" unique_id=1714102854 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1700, -500)
+TileType = 1
+PathsAhead = [NodePath("../Path node15"), NodePath("../Path node30")]
+
+[node name="Path node15" parent="Board Paths" unique_id=1872895875 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1932, -450)
+TileType = 1
+PathsAhead = [NodePath("../Path node16")]
+
+[node name="Path node16" parent="Board Paths" unique_id=1997959057 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(2158, -302)
+TileType = 13
+PathsAhead = [NodePath("../Path node17")]
+
+[node name="Path node17" parent="Board Paths" unique_id=1404214816 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(2199, -10)
+TileType = 2
+PathsAhead = [NodePath("../Path node18")]
+
+[node name="Path node18" parent="Board Paths" unique_id=493684822 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(2020, 207)
+TileType = 3
+PathsAhead = [NodePath("../Path node19")]
+
+[node name="Path node19" parent="Board Paths" unique_id=774625303 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1763, 267)
+TileType = 14
+PathsAhead = [NodePath("../Path node20"), NodePath("../Path node23")]
+
+[node name="Path node20" parent="Board Paths" unique_id=1222306079 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1779, 521)
+TileType = 1
+PathsAhead = [NodePath("../Path node21")]
+
+[node name="Path node21" parent="Board Paths" unique_id=1125287113 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1575, 716)
+TileType = 4
+PathsAhead = [NodePath("../Path node22")]
+
+[node name="Path node22" parent="Board Paths" unique_id=1149173509 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1236, 638)
+TileType = 13
+PathsAhead = [NodePath("../Path node24")]
+
+[node name="Path node23" parent="Board Paths" unique_id=1192596785 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1437, 371)
+TileType = 2
+PathsAhead = [NodePath("../Path node22")]
+
+[node name="Path node24" parent="Board Paths" unique_id=650949096 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(841, 631)
+TileType = 1
+PathsAhead = [NodePath("../Path node25"), NodePath("../Path node37")]
+
+[node name="Path node25" parent="Board Paths" unique_id=1815867149 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(854, 396)
+TileType = 4
+PathsAhead = [NodePath("../Path node26"), NodePath("../Path node36")]
+
+[node name="Path node26" parent="Board Paths" unique_id=569244164 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(983, 324)
+TileType = 13
+PathsAhead = [NodePath("../Path node27")]
+
+[node name="Path node27" parent="Board Paths" unique_id=1622128268 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(835, 133)
+TileType = 3
+PathsAhead = [NodePath("../Path node28")]
+
+[node name="Path node28" parent="Board Paths" unique_id=1839640797 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1155, -74)
+TileType = 1
+PathsAhead = [NodePath("../Path node29"), NodePath("../Path node31"), NodePath("../Path node27")]
+
+[node name="Path node29" parent="Board Paths" unique_id=291451621 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1409, -149)
+TileType = 2
+PathsAhead = [NodePath("../Path node30")]
+
+[node name="Path node30" parent="Board Paths" unique_id=293005653 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(1654, -171)
+TileType = 3
+PathsAhead = [NodePath("../Path node19")]
+
+[node name="Path node31" parent="Board Paths" unique_id=67112665 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(935, -406)
+TileType = 1
+PathsAhead = [NodePath("../Path node28")]
+
+[node name="Path node32" parent="Board Paths" unique_id=1374276873 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(678, -280)
+TileType = 4
+PathsAhead = [NodePath("../Path node3")]
+
+[node name="Path node33" parent="Board Paths" unique_id=2031425264 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(578, 2)
+TileType = 14
+PathsAhead = [NodePath("../Path node32")]
+
+[node name="Path node34" parent="Board Paths" unique_id=1406277889 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(258, 15)
+TileType = 3
+PathsAhead = [NodePath("../Path node33")]
+
+[node name="Path node35" parent="Board Paths" unique_id=2038074467 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(223, 307)
+TileType = 1
+PathsAhead = [NodePath("../Path node34")]
+
+[node name="Path node36" parent="Board Paths" unique_id=257569272 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(575, 301)
+TileType = 2
+PathsAhead = [NodePath("../Path node35")]
+
+[node name="Path node37" parent="Board Paths" unique_id=331499779 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(644, 756)
+TileType = 1
+PathsAhead = [NodePath("../Path node38")]
+
+[node name="Path node38" parent="Board Paths" unique_id=1695519566 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(355, 800)
+TileType = 2
+PathsAhead = [NodePath("../Path node39")]
+
+[node name="Path node39" parent="Board Paths" unique_id=974678912 node_paths=PackedStringArray("PathsAhead") instance=ExtResource("2_7h4yy")]
+position = Vector2(-50, 436)
+TileType = 14
+PathsAhead = [NodePath("../Path node")]
+
+[connection signal="pressed" from="UI/Player buttons/MarginContainer/VBoxContainer/Button" to="Board Manager" method="roll_button_pressed"]
+
+[editable path="Player2"]
+[editable path="Player3"]

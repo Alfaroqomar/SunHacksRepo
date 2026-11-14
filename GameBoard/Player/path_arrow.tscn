@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://ynyeb8uqxkmv"]
+
+[ext_resource type="Script" uid="uid://d0aftqou7p8yw" path="res://GameBoard/Player/path_arrow.gd" id="1_i1cpe"]
+
+[node name="PathArrow" type="Polygon2D" unique_id=707071188]
+color = Color(1, 0.7411765, 0.09019608, 1)
+polygon = PackedVector2Array(-1.9073486e-06, -24.000002, 23.999998, -5.722046e-06, 15.99999, -5.722046e-06, -9.536743e-06, -16.000006, -16.00001, -5.722046e-06, -24.00001, -5.722046e-06)
+uv = PackedVector2Array(-1.9073486e-06, -24.000002, 23.999998, -5.722046e-06, 15.99999, -5.722046e-06, -9.536743e-06, -16.000006, -16.00001, -5.722046e-06, -24.00001, -5.722046e-06)
+script = ExtResource("1_i1cpe")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=2076743199]
+color = Color(0.19607843, 0.1882353, 0.19215687, 1)
+polygon = PackedVector2Array(0, -16, 16, 4.7683716e-07, 8.000008, 4.7683716e-07, 0, -7.9999995, -8, 4.7683716e-07, -16, 4.7683716e-07)
+uv = PackedVector2Array(-1.9073486e-06, -16.000002, 23.999998, 7.9999943, 15.99999, 7.9999943, -9.536743e-06, -8.000006, -16.00001, 7.9999943, -24.00001, 7.9999943)
+
+[node name="Button" type="Button" parent="." unique_id=1203654541]
+modulate = Color(1, 1, 1, 0)
+offset_left = -27.0
+offset_top = -27.0
+offset_right = 28.0
+offset_bottom = 6.0
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]

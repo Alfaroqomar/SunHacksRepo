@@ -1,0 +1,299 @@
+[gd_scene format=3 uid="uid://drqo248bup68v"]
+
+[ext_resource type="Script" uid="uid://fpu1h2tr6reh" path="res://Scripts/menu_manager.gd" id="1_853f1"]
+[ext_resource type="Texture2D" uid="uid://badxw1t7ps4fl" path="res://icon.svg" id="1_tt5f1"]
+[ext_resource type="Texture2D" uid="uid://bmlwi1lt40ijh" path="res://Sprites/MinigameSprites/CardMinigame/Background.png" id="2_df05h"]
+[ext_resource type="Script" uid="uid://dv11n7pprt18s" path="res://Scenes/name_edit.gd" id="3_8saeu"]
+[ext_resource type="FontFile" uid="uid://baknr2y3q4228" path="res://Fonts/Dreadful-Regular.otf" id="3_ghw46"]
+[ext_resource type="Texture2D" uid="uid://d0i0judyy5dhw" path="res://Sprites/MinigameSprites/CardMinigame/Gamejam_card_symbols.png" id="4_xim88"]
+[ext_resource type="Shader" uid="uid://ct3bufaq0u4ef" path="res://Scenes/texture_particles.gdshader" id="5_koqhg"]
+[ext_resource type="FontFile" uid="uid://cry7g1jegei8" path="res://Fonts/Dreadful-Shadow.otf" id="6_8um5k"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ghw46"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(100, 100, 1)
+gravity = Vector3(0, -98, 0)
+scale_min = 0.19999999
+scale_max = 0.19999999
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rrcx7"]
+particles_animation = true
+particles_anim_h_frames = 4
+particles_anim_v_frames = 3
+particles_anim_loop = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_loo7a"]
+shader = ExtResource("5_koqhg")
+shader_parameter/sprite_columns = 4
+shader_parameter/sprite_rows = 3
+shader_parameter/valid_rows = 2
+shader_parameter/emission_rect = true
+shader_parameter/emission_disc = false
+shader_parameter/emission_ring = false
+shader_parameter/emission_box_extents = Vector2(500, 50)
+shader_parameter/emission_radius = 50.0
+shader_parameter/initial_direction = Vector3(0, -1, 0)
+shader_parameter/spread_degrees = 30.0
+shader_parameter/initial_speed_min = 10.0
+shader_parameter/initial_speed_max = 10.0
+shader_parameter/gravity = Vector3(0, -20, 0)
+shader_parameter/damping = 0.0
+shader_parameter/initial_angle_min = 30.0
+shader_parameter/initial_angle_max = 0.0
+shader_parameter/angular_velocity_min = -20.0
+shader_parameter/angular_velocity_max = 20.0
+shader_parameter/scale_min = 0.1
+shader_parameter/scale_max = 0.1
+shader_parameter/base_color = Color(1, 1, 1, 1)
+shader_parameter/fade_in_fraction = 0.2
+shader_parameter/fade_out_fraction = 0.7
+shader_parameter/lifetime_min_fraction = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghw46"]
+bg_color = Color(0.6039216, 0.3019608, 0.58431375, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="LabelSettings" id="LabelSettings_df05h"]
+font = ExtResource("3_ghw46")
+font_size = 40
+font_color = Color(0.19607843, 0.1882353, 0.19215687, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_8um5k"]
+
+[node name="MainMenu" type="Control" unique_id=1853646871 node_paths=PackedStringArray("nameInputContainer", "nameInput")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_853f1")
+nameInputContainer = NodePath("GameName")
+nameInput = NodePath("GameName/VBoxContainer/NameEdit")
+
+[node name="LeftSide" type="TextureRect" parent="." unique_id=1402574868]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_df05h")
+
+[node name="RightSide" type="TextureRect" parent="." unique_id=1346056440]
+visible = false
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -528.0
+offset_top = -131.0
+offset_right = -400.0
+offset_bottom = -623.08203
+grow_horizontal = 0
+grow_vertical = 2
+rotation = 0.2617994
+scale = Vector2(5.605, 5.605)
+texture = ExtResource("1_tt5f1")
+
+[node name="ParticleContainer" type="Control" parent="." unique_id=132765405]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = 200.0
+offset_right = 20.0
+offset_bottom = 400.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset_ratio = Vector2(0.5, 0.5)
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="ParticleContainer" unique_id=252945744]
+visible = false
+position = Vector2(600, 0)
+scale = Vector2(6, 1)
+amount = 10
+texture = ExtResource("1_tt5f1")
+lifetime = 5.0
+visibility_rect = Rect2(-100, -100, 1000, -1000)
+process_material = SubResource("ParticleProcessMaterial_ghw46")
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="ParticleContainer" unique_id=999303633]
+visible = false
+position = Vector2(600, 0)
+scale = Vector2(6, 1)
+amount = 10
+texture = ExtResource("1_tt5f1")
+lifetime = 5.0
+visibility_rect = Rect2(-100, -100, 1000, -1000)
+process_material = SubResource("ParticleProcessMaterial_ghw46")
+
+[node name="GPUParticles2D3" type="GPUParticles2D" parent="ParticleContainer" unique_id=790901897]
+material = SubResource("CanvasItemMaterial_rrcx7")
+position = Vector2(600, 0)
+scale = Vector2(6, 1)
+amount = 19
+texture = ExtResource("4_xim88")
+lifetime = 5.0
+visibility_rect = Rect2(-100, -100, 1000, -1000)
+process_material = SubResource("ShaderMaterial_loo7a")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=338193487]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.23
+anchor_right = 0.35
+anchor_bottom = 0.67
+offset_left = 132.4
+offset_right = -23.199982
+offset_bottom = 40.0
+
+[node name="PartyButton" type="Button" parent="VBoxContainer" unique_id=1562865338]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PartyButton" unique_id=359128503]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_ghw46")
+theme_override_font_sizes/normal_font_size = 40
+text = "Party"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MinigamesButton" type="Button" parent="VBoxContainer" unique_id=566095070]
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/MinigamesButton" unique_id=1346472367]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_ghw46")
+theme_override_font_sizes/normal_font_size = 40
+text = "Minigames"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CreditsButton" type="Button" parent="VBoxContainer" unique_id=1243410583]
+visible = false
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/CreditsButton" unique_id=154737908]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_ghw46")
+theme_override_font_sizes/normal_font_size = 40
+text = "Credit"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="GameName" type="Panel" parent="." unique_id=84477883]
+self_modulate = Color(1, 0.8862745, 0.72156864, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.65
+anchor_right = 0.5
+anchor_bottom = 0.65
+offset_left = -130.0
+offset_top = -110.0
+offset_right = 130.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ghw46")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameName" unique_id=1033896996]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GameName/VBoxContainer" unique_id=1358315751]
+layout_mode = 2
+text = "Your Name"
+label_settings = SubResource("LabelSettings_df05h")
+horizontal_alignment = 1
+
+[node name="NameEdit" type="LineEdit" parent="GameName/VBoxContainer" unique_id=1057310780]
+self_modulate = Color(1, 0.8862745, 0.72156864, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_ghw46")
+theme_override_font_sizes/font_size = 30
+placeholder_text = "Input Name"
+alignment = 1
+max_length = 16
+script = ExtResource("3_8saeu")
+
+[node name="Spacer" type="Control" parent="GameName/VBoxContainer" unique_id=111111111]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="GameName/VBoxContainer" unique_id=1605470779]
+self_modulate = Color(1, 0.8862745, 0.72156864, 1)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_ghw46")
+theme_override_font_sizes/font_size = 30
+text = "Enter"
+
+[node name="GameNameLabel" type="RichTextLabel" parent="." unique_id=1629804419]
+self_modulate = Color(1, 0.6666667, 1, 1)
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.1
+anchor_right = 0.5
+anchor_bottom = 0.1
+offset_left = -200.0
+offset_right = 200.0
+offset_bottom = 91.2
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 1
+theme_override_constants/outline_size = 6
+theme_override_fonts/normal_font = ExtResource("6_8um5k")
+theme_override_font_sizes/normal_font_size = 100
+theme_override_styles/normal = SubResource("StyleBoxEmpty_8um5k")
+bbcode_enabled = true
+text = "Suddenly a Ghost"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/PartyButton" to="." method="_on_party_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="editing_toggled" from="GameName/VBoxContainer/NameEdit" to="GameName/VBoxContainer/NameEdit" method="_on_editing_toggled"]
+[connection signal="pressed" from="GameName/VBoxContainer/Button" to="." method="_on_button_pressed"]
