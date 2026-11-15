@@ -29,7 +29,7 @@ script = ExtResource("1_u11qv")
 maze_player_scene = ExtResource("6_wec26")
 map_view_node = NodePath("../MapViewNode")
 exit_area = NodePath("../ExitArea/Area3D")
-gemini_api_key = "AQ.Ab8RN6IoZ1Pr7CbQvogrHoSBQevYeQ6t60qCBl2ISnyTXoP4Pg"
+gemini_api_key = "AQ.Ab8RN6Li83CFD9PNZnC5dRQIpNYW07LJnJ248Jx93PufXcRKgQ"
 gemini_model = "gemini-3.6-flash"
 
 [node name="World" parent="." unique_id=240199409 instance=ExtResource("2_pr66p")]

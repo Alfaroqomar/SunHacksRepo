@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://badxw1t7ps4fl" path="res://icon.svg" id="1_tt5f1"]
 [ext_resource type="Texture2D" uid="uid://cslg0n0man7rx" path="res://Sprites/iu_.png" id="2_koqhg"]
 [ext_resource type="Script" uid="uid://dv11n7pprt18s" path="res://Scenes/name_edit.gd" id="3_8saeu"]
-[ext_resource type="FontFile" uid="uid://baknr2y3q4228" path="res://Fonts/Dreadful-Regular.otf" id="3_ghw46"]
 [ext_resource type="Texture2D" uid="uid://d0i0judyy5dhw" path="res://Sprites/MinigameSprites/CardMinigame/Gamejam_card_symbols.png" id="4_xim88"]
 [ext_resource type="Shader" uid="uid://ct3bufaq0u4ef" path="res://Scenes/texture_particles.gdshader" id="5_koqhg"]
 [ext_resource type="FontFile" uid="uid://dduf06n5a2k4p" path="res://Fonts/Jokerman.otf" id="8_koqhg"]
@@ -189,7 +188,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("3_ghw46")
+theme_override_fonts/normal_font = ExtResource("8_koqhg")
 theme_override_font_sizes/normal_font_size = 40
 text = "Minigames"
 horizontal_alignment = 1
@@ -208,7 +207,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("3_ghw46")
+theme_override_fonts/normal_font = ExtResource("8_koqhg")
 theme_override_font_sizes/normal_font_size = 40
 text = "Credit"
 horizontal_alignment = 1
