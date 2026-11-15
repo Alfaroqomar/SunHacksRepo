@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://fpu1h2tr6reh" path="res://Scripts/menu_manager.gd" id="1_853f1"]
 [ext_resource type="Texture2D" uid="uid://badxw1t7ps4fl" path="res://icon.svg" id="1_tt5f1"]
-[ext_resource type="Texture2D" uid="uid://bmlwi1lt40ijh" path="res://Sprites/MinigameSprites/CardMinigame/Background.png" id="2_df05h"]
+[ext_resource type="Texture2D" uid="uid://cslg0n0man7rx" path="res://Sprites/iu_.png" id="2_koqhg"]
 [ext_resource type="Script" uid="uid://dv11n7pprt18s" path="res://Scenes/name_edit.gd" id="3_8saeu"]
 [ext_resource type="FontFile" uid="uid://baknr2y3q4228" path="res://Fonts/Dreadful-Regular.otf" id="3_ghw46"]
 [ext_resource type="Texture2D" uid="uid://d0i0judyy5dhw" path="res://Sprites/MinigameSprites/CardMinigame/Gamejam_card_symbols.png" id="4_xim88"]
@@ -83,7 +83,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_df05h")
+texture = ExtResource("2_koqhg")
 
 [node name="RightSide" type="TextureRect" parent="." unique_id=1346056440]
 visible = false
