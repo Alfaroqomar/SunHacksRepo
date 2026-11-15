@@ -29,8 +29,8 @@ const GEMINI_PROMPTS: Array[String] = [
 
 ## Seconds between maze-player position broadcasts.  Drop to ~0.5 for a
 ## smoother dot on the map; raise to 3–4 for more tension.
-@export var position_sync_interval: float = 2.0
-@export var exit_trigger_distance: float = 5.0
+@export var position_sync_interval: float = 1.0
+@export var exit_trigger_distance: float = 4.0
 
 ## The 3-D character scene.  Instantiated only on the MAZE_PLAYER's machine.
 @export var maze_player_scene: PackedScene
@@ -284,4 +284,4 @@ func _rpc_end_game(won: bool) -> void:
 
 	if MinigameManager.is_host:
 		await get_tree().create_timer(3.0).timeout
-		GDSync.change_scene("res://Scenes/Lobby.tscn") # ← adjust to your lobby path
+		GDSync.change_scene("res://Scenes/PartyScene.tscn") # ← adjust to your lobby path

@@ -65,7 +65,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.654902)
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="MapViewNode/MapArea" unique_id=1818914795]
-self_modulate = Color(6.8404474, 2.6312613, 6.892094, 1)
+self_modulate = Color(0.99215686, 0.3529412, 1, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

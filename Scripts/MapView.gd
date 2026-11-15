@@ -83,8 +83,19 @@ func _ready() -> void:
 	# Wait one frame so global_position on exit_area is valid.
 	await get_tree().process_frame
 	_place_exit_icon()
+	_start_player_pulse()
 
 
+
+func _start_player_pulse() -> void:
+	if player_icon == null:
+		return
+	var tween := create_tween().set_loops()
+	tween.tween_property(player_icon, "scale", Vector2(1.4, 1.4), 0.3)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tween.tween_property(player_icon, "scale", Vector2(1.0, 1.0), 0.3)\
+		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	tween.tween_interval(2.0)  # pause between pulses
 ## Places the exit icon using the 3-D world position of exit_area.
 ## Called once at startup; the exit never moves.
 func _place_exit_icon() -> void:
