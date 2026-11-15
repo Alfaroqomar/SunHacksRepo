@@ -6,7 +6,7 @@ extends CharacterBody3D
 @onready var camera = $Head/Camera3D
 @onready var flashlight = $Head/Camera3D/SpotLight3D
 
-const SPEED = 5.0
+const SPEED = 2.5
 const JUMP_VELOCITY = 4.5
 
 
