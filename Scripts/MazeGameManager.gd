@@ -17,9 +17,20 @@ enum GameState { LOBBY, PLAYING, WON, LOST }
 
 # ─── Exports ─────────────────────────────────────────────────────────────────
 
+
+
+const GEMINI_PROMPTS: Array[String] = [
+	"You are to rephrase the text in an slightly impractical way, keeping the same meaning original meaning but being slightly harder to understand. Be concise.",
+	"You are to rephrase the text in an slightly impractical way alongside reformatting in shakespearian style, keeping the same meaning original meaning but being slightly harder to understand. Be concise.",
+	"You are to rephrase the text in an slightly impractical way by reformatting the message into emojis, keeping the same meaning original meaning but being slightly harder to understand. Be concise.",
+	"You are to rephrase the text in a slightly impractical way by reformatting the message into a poem, keeping the same meaning original meaning but being slightly harder to understand. Be concise.",
+	"You are to rephrase the text in a slightly impractical way by reformatting the message into a haiku, keeping the same meaning original meaning but being slightly harder to understand. Be concise.",
+]
+
 ## Seconds between maze-player position broadcasts.  Drop to ~0.5 for a
 ## smoother dot on the map; raise to 3–4 for more tension.
 @export var position_sync_interval: float = 2.0
+@export var exit_trigger_distance: float = 5.0
 
 ## The 3-D character scene.  Instantiated only on the MAZE_PLAYER's machine.
 @export var maze_player_scene: PackedScene
@@ -35,8 +46,14 @@ enum GameState { LOBBY, PLAYING, WON, LOST }
 var my_role: Role = Role.UNASSIGNED
 var game_state: GameState = GameState.LOBBY
 
+@export var gemini_api_key: String = ""
+@export var gemini_model: String = "gemini-2.0-flash"
+
 ## player_id (int) → Role
 var role_map: Dictionary = {}
+
+var _http: HTTPRequest = null
+var _pending_message: String = ""
 
 ## Instantiated only on the MAZE_PLAYER's client.
 var maze_player_node: CharacterBody3D = null
@@ -56,6 +73,9 @@ signal game_ended(won: bool)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 func _ready() -> void:
+	_http = HTTPRequest.new()
+	add_child(_http)
+	_http.request_completed.connect(_on_gemini_response)
 	# Expose all RPCs before any packet can arrive.
 	GDSync.expose_func(_rpc_assign_roles)
 	GDSync.expose_func(_rpc_begin_game)
@@ -109,12 +129,13 @@ func _rpc_begin_game() -> void:
 ## Show the right view and optionally spawn the 3-D character.
 func _setup_local_view() -> void:
 	if map_view_node:
-		map_view_node.visible = (my_role == Role.MAP_PLAYER)
+		map_view_node.visible = true  # both roles need to see the chat
+		if map_view_node.has_method("setup_for_role"):
+			map_view_node.setup_for_role(my_role)
 
 	if my_role == Role.MAZE_PLAYER:
 		_spawn_maze_player()
 	else:
-		# Map player needs the cursor free for the chat panel.
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
@@ -124,6 +145,7 @@ func _spawn_maze_player() -> void:
 		return
 	maze_player_node = maze_player_scene.instantiate() as CharacterBody3D
 	add_child(maze_player_node)              # ← _ready() fires here, disabling processing
+	maze_player_node.global_position = Vector3(-2, .5, 2) # ← adjust to your maze's spawn point
 	if maze_player_node.has_method("enable_local_input"):
 		maze_player_node.enable_local_input() # ← now runs AFTER _ready(), so it sticks
 
@@ -137,11 +159,18 @@ func _process(delta: float) -> void:
 	if maze_player_node == null:
 		return
 
+	# Position sync
 	_sync_timer += delta
 	if _sync_timer >= position_sync_interval:
 		_sync_timer = 0.0
 		GDSync.call_func_all(_rpc_maze_player_position, maze_player_node.global_position)
 
+	# Exit proximity check
+	if exit_area == null:
+		return
+	var dist := maze_player_node.global_position.distance_to(exit_area.global_position)
+	if dist <= exit_trigger_distance:
+		GDSync.call_func_all(_rpc_end_game, true)
 
 ## Received by every client.  MapView connects to maze_player_moved to update the dot.
 func _rpc_maze_player_position(world_pos: Vector3) -> void:
@@ -171,8 +200,53 @@ func send_chat(message: String) -> void:
 	var trimmed := message.strip_edges()
 	if trimmed.is_empty():
 		return
-	GDSync.call_func_all(_rpc_chat, GDSync.get_client_id(), trimmed)
 
+	if gemini_api_key.is_empty():
+		# No API key — send as-is
+		GDSync.call_func_all(_rpc_chat, GDSync.get_client_id(), trimmed)
+		return
+
+	_pending_message = trimmed
+	_call_gemini(trimmed)
+
+func _call_gemini(message: String) -> void:
+	var url := "https://generativelanguage.googleapis.com/v1beta/models/%s:generateContent?key=%s" \
+		% [gemini_model, gemini_api_key]
+
+	var body := JSON.stringify({
+		"system_instruction": {
+			"parts": [{ "text": GEMINI_PROMPTS.pick_random() }]
+		},
+		"contents": [{
+			"parts": [{ "text": message }]
+		}]
+	})
+
+	_http.request(url, ["Content-Type: application/json"], HTTPClient.METHOD_POST, body)
+
+func _on_gemini_response(result: int, code: int, _headers: PackedStringArray, body: PackedByteArray) -> void:
+	if result != HTTPRequest.RESULT_SUCCESS or code != 200:
+		push_warning("Gemini request failed: result=%d code=%d" % [result, code])
+		# Fall back to the original message
+		GDSync.call_func_all(_rpc_chat, GDSync.get_client_id(), _pending_message)
+		return
+
+	var json := JSON.new()
+	if json.parse(body.get_string_from_utf8()) != OK:
+		GDSync.call_func_all(_rpc_chat, GDSync.get_client_id(), _pending_message)
+		return
+
+	var data: Variant = json.get_data()
+	var out: String = _pending_message  # fallback if parsing fails
+
+	if data is Dictionary and data.has("candidates"):
+		var candidates: Array = data["candidates"]
+		if candidates.size() > 0:
+			var parts = candidates[0].get("content", {}).get("parts", [])
+			if parts.size() > 0:
+				out = parts[0].get("text", _pending_message).strip_edges()
+
+	GDSync.call_func_all(_rpc_chat, GDSync.get_client_id(), out)
 
 func _rpc_chat(sender_id: int, message: String) -> void:
 	var data = MinigameManager.get_player_data_by_id(sender_id)

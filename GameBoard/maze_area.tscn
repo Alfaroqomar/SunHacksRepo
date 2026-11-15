@@ -3,24 +3,29 @@
 [ext_resource type="Script" uid="uid://ds3425x4v74w2" path="res://Scripts/MazeGameManager.gd" id="1_u11qv"]
 [ext_resource type="PackedScene" uid="uid://ckavqb25bdaul" path="res://Scenes/world.tscn" id="2_pr66p"]
 [ext_resource type="Script" uid="uid://c1dn5bp5k6tjs" path="res://Scripts/MapView.gd" id="2_ur3ut"]
-[ext_resource type="Texture2D" uid="uid://cscjjt55iw2cu" path="res://addons/phantom_camera/examples/textures/2D/player_sprite.svg" id="4_ia43w"]
-[ext_resource type="Texture2D" uid="uid://bka7kdg1a7eq4" path="res://addons/at-icons/node2d/doorway_exit.svg" id="5_xui23"]
+[ext_resource type="Texture2D" uid="uid://b5x8dtdeql2f8" path="res://addons/at-icons/mesh/person_body.svg" id="5_wec26"]
+[ext_resource type="Texture2D" uid="uid://cox8u0daw2kt" path="res://addons/at-icons/control/doorway_exit.svg" id="6_g6fvp"]
+[ext_resource type="PackedScene" uid="uid://badnyacw7w11f" path="res://Scenes/player.tscn" id="6_wec26"]
+[ext_resource type="FontFile" uid="uid://dduf06n5a2k4p" path="res://Fonts/Jokerman.otf" id="7_g6fvp"]
 
 [node name="MazeArea" type="Node3D" unique_id=626886955]
 
 [node name="MazeManager" type="Node3D" parent="." unique_id=1158878910 node_paths=PackedStringArray("map_view_node", "exit_area")]
 script = ExtResource("1_u11qv")
+maze_player_scene = ExtResource("6_wec26")
 map_view_node = NodePath("../MapViewNode")
 exit_area = NodePath("../ExitArea/Area3D")
+gemini_api_key = "AQ.Ab8RN6IoZ1Pr7CbQvogrHoSBQevYeQ6t60qCBl2ISnyTXoP4Pg"
+gemini_model = "gemini-3.6-flash"
 
 [node name="World" parent="." unique_id=240199409 instance=ExtResource("2_pr66p")]
 
 [node name="ExitArea" type="Node3D" parent="." unique_id=702113566]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.692439, 3.7544937, -10.214518)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.287408, 0, 34.88855)
 
 [node name="Area3D" type="Area3D" parent="ExitArea" unique_id=1795914637]
 
-[node name="MapViewNode" type="Control" parent="." unique_id=674099558 node_paths=PackedStringArray("maze_manager", "map_area", "map_viewport", "player_icon", "exit_icon", "enemy_icons_container", "chat_container", "chat_scroll", "chat_input", "send_button")]
+[node name="MapViewNode" type="Control" parent="." unique_id=674099558 node_paths=PackedStringArray("maze_manager", "map_area", "map_viewport", "player_icon", "exit_icon", "enemy_icons_container", "chat_container", "chat_input", "send_button")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -28,27 +33,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_ur3ut")
+chat_font = ExtResource("7_g6fvp")
 maze_manager = NodePath("../MazeManager")
 map_area = NodePath("MapArea")
 map_viewport = NodePath("MapArea/SubViewportContainer/SubViewport")
 player_icon = NodePath("MapArea/PlayerIcon")
 exit_icon = NodePath("MapArea/ExitIcon")
 enemy_icons_container = NodePath("MapArea/EnemyIcons")
-chat_container = NodePath("ChatPanel/ChatScroll/VBoxContainer")
-chat_scroll = NodePath("ChatPanel/ChatScroll")
+chat_container = NodePath("ChatPanel/VBoxContainer")
 chat_input = NodePath("ChatPanel/HBoxContainer/ChatInput")
 send_button = NodePath("ChatPanel/HBoxContainer/Button")
 
 [node name="MapArea" type="Control" parent="MapViewNode" unique_id=1708036571]
 layout_mode = 1
-anchor_top = 0.2
-anchor_right = 0.6
-anchor_bottom = 0.8
+anchor_left = 0.2
+anchor_top = 0.1
+anchor_right = 0.8
+anchor_bottom = 0.81
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
+[node name="ColorRect" type="ColorRect" parent="MapViewNode/MapArea" unique_id=422844733]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.15
+anchor_right = 0.85
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.654902)
+
 [node name="SubViewportContainer" type="SubViewportContainer" parent="MapViewNode/MapArea" unique_id=1818914795]
+self_modulate = Color(6.8404474, 2.6312613, 6.892094, 1)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -59,15 +76,16 @@ mouse_filter = 2
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="MapViewNode/MapArea/SubViewportContainer" unique_id=265288425]
+transparent_bg = true
 handle_input_locally = false
-size = Vector2i(1152, 648)
+size = Vector2i(691, 460)
 render_target_update_mode = 4
 
 [node name="Camera3D" type="Camera3D" parent="MapViewNode/MapArea/SubViewportContainer/SubViewport" unique_id=62084778]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 40.96486, 0)
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 40.965, 0)
 cull_mask = 1047553
 projection = 1
-size = 90.0
+size = 105.0
 
 [node name="PlayerIcon" type="Control" parent="MapViewNode/MapArea" unique_id=1921117367]
 visible = false
@@ -83,7 +101,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("4_ia43w")
+texture = ExtResource("5_wec26")
 expand_mode = 1
 stretch_mode = 6
 
@@ -101,7 +119,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("5_xui23")
+texture = ExtResource("6_g6fvp")
 expand_mode = 1
 stretch_mode = 6
 
@@ -116,24 +134,15 @@ mouse_filter = 2
 
 [node name="ChatPanel" type="Control" parent="MapViewNode" unique_id=770146171]
 layout_mode = 1
-anchor_left = 0.65
-anchor_right = 1.0
+anchor_left = 0.25
+anchor_right = 0.75
 anchor_bottom = 1.0
 offset_left = 5.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
-
-[node name="ChatScroll" type="ScrollContainer" parent="MapViewNode/ChatPanel" unique_id=889924146]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -48.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MapViewNode/ChatPanel/ChatScroll" unique_id=132811489]
-layout_mode = 2
-size_flags_horizontal = 3
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MapViewNode/ChatPanel" unique_id=1687321642]
 layout_mode = 1
@@ -143,13 +152,27 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -44.0
 offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="ChatInput" type="LineEdit" parent="MapViewNode/ChatPanel/HBoxContainer" unique_id=831021855]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("7_g6fvp")
 placeholder_text = "Type a hint..."
 
 [node name="Button" type="Button" parent="MapViewNode/ChatPanel/HBoxContainer" unique_id=1949519298]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
+theme_override_fonts/font = ExtResource("7_g6fvp")
 text = "Send"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapViewNode/ChatPanel" unique_id=132811489]
+layout_mode = 1
+anchors_preset = -1
+anchor_bottom = 0.9
+offset_right = 561.0
+size_flags_horizontal = 3
+alignment = 2
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=235080700]

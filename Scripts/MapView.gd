@@ -25,6 +25,9 @@ extends Control
 
 # ─── Exports ─────────────────────────────────────────────────────────────────
 
+@export var chat_font: FontFile
+@export var chat_font_size: int = 16
+
 @export var maze_manager: MazeGameManager
 
 ## The MapArea Control — provides the pixel size for coordinate conversion.
@@ -46,9 +49,11 @@ extends Control
 @export var enemy_icon_scene: PackedScene
 
 @export var chat_container: VBoxContainer
-@export var chat_scroll: ScrollContainer
+#@export var chat_scroll: ScrollContainer
 @export var chat_input: LineEdit
 @export var send_button: Button
+
+const MESSAGE_ALPHAS: Array[float] = [0.0, 0.25, 0.65, 1.0]
 
 ## World-space XZ extents of your maze floor — must match the overhead camera coverage.
 @export var maze_world_min: Vector2 = Vector2(-50.0, -50.0)
@@ -134,13 +139,48 @@ func _on_chat_received(_sender_id: int, username: String, color: Color, message:
 	var label := RichTextLabel.new()
 	label.bbcode_enabled = true
 	label.fit_content = true
+	label.modulate.a = 0.0
+	label.visible_ratio = 0.0  # start with no characters visible
+	if chat_font:
+		label.add_theme_font_override("normal_font", chat_font)
+		label.add_theme_font_size_override("normal_font_size", chat_font_size)
 	var safe_name := username.replace("[", "[lb]")
 	label.text = "[color=#%s][b]%s:[/b][/color] %s" % [color.to_html(false), safe_name, message]
 	chat_container.add_child(label)
-	if chat_scroll:
-		await get_tree().process_frame
-		chat_scroll.scroll_vertical = chat_scroll.get_v_scroll_bar().max_value
 
+	while chat_container.get_child_count() > 4:
+		chat_container.get_child(0).free()
+
+	_update_message_fades()
+
+	# Typewriter effect — tune the duration to control typing speed
+	var chars := float(label.get_total_character_count())
+	var duration := chars * 0.04  # 40ms per character
+	var tween := create_tween()
+	tween.tween_property(label, "visible_ratio", 1.0, duration)
+
+func _update_message_fades() -> void:
+	var children := chat_container.get_children()
+	var count := children.size()
+	for i in count:
+		# Always map so the newest (last) child = alpha 1.0
+		var alpha_index := MESSAGE_ALPHAS.size() - count + i
+		var target: float = MESSAGE_ALPHAS[alpha_index] if alpha_index >= 0 else 0.0
+		var tween := create_tween()
+		tween.tween_property(children[i], "modulate:a", target, 0.6)
+
+func setup_for_role(role: MazeGameManager.Role) -> void:
+	var is_map_player := (role == MazeGameManager.Role.MAP_PLAYER)
+	if map_area:
+		map_area.visible = is_map_player
+	if chat_input:
+		chat_input.visible = is_map_player
+	if send_button:
+		send_button.visible = is_map_player
+	if not is_map_player:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		if map_area:
+			map_area.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _on_game_ended(_won: bool) -> void:
 	if chat_input:

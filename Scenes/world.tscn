@@ -1,6 +1,5 @@
 [gd_scene format=3 uid="uid://ckavqb25bdaul"]
 
-[ext_resource type="Script" uid="uid://b0gd8hrqpvtbb" path="res://Scripts/Player.gd" id="1_a02cp"]
 [ext_resource type="Texture2D" uid="uid://cq6qychc5emhn" path="res://Sprites/Amon.jpg" id="1_go701"]
 [ext_resource type="Texture2D" uid="uid://cs7ywxd454doh" path="res://Sprites/Error_Symbol2.webp" id="3_5a7ea"]
 
@@ -21,11 +20,6 @@ albedo_texture = ExtResource("1_go701")
 uv1_scale = Vector3(0.37, 0.37, 0.37)
 uv1_triplanar = true
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_y8xib"]
-
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_036b0"]
-points = PackedVector3Array(-0.12520654, -0.532801, -0.4805069, 0.022783129, 0.4760704, 0.49888408, 0.16971254, 0.5591441, 0.46417162, 0.23105091, -0.8035912, 0.32045516, 0.40741014, 0.651043, -0.24352328, -0.4827893, 0.59484255, 0.082213186, -0.3628679, -0.68231165, 0.2896967, 0.46904355, -0.65452886, -0.06627126, -0.12744367, 0.8427015, -0.33810276, -0.39343542, -0.6839421, -0.24471663, 0.43825462, 0.62330925, 0.20084947, 0.0841477, 0.977454, 0.11479468, -0.06820232, -0.9764576, -0.12927033, 0.20054972, -0.56312895, -0.4514544, -0.18552664, 0.59545326, -0.4534751, -0.27336287, 0.59226835, 0.40775412, -0.0069364863, -0.47682306, 0.49966025, 0.37582088, -0.5886136, 0.31695515, 0.111579016, 0.5630594, -0.48117727, -0.41725034, 0.5278656, -0.27049688, -0.48454633, -0.59697217, -0.06650971, -0.27974695, 0.90856135, 0.05333608, -0.25019687, -0.8807117, 0.20531891, 0.263647, -0.90277094, -0.1273943, 0.29336792, 0.8715263, -0.15719566, 0.3734115, -0.5263189, -0.32824618, 0.4996626, 0.47664148, -0.0068885577, 0.053105574, 0.8750009, 0.32470253, -0.15454252, -0.5908538, 0.4658794, -0.09727988, -0.7823577, -0.39818847, -0.3876489, -0.49817133, 0.31564978, -0.30067965, -0.58799505, -0.38890144)
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_32w75"]
 albedo_texture = ExtResource("3_5a7ea")
 uv1_scale = Vector3(0.585, 0.585, 0.585)
@@ -43,309 +37,291 @@ environment = SubResource("Environment_aqk2v")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=567658955]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.2904663)
+layers = 2
 use_collision = true
 size = Vector3(100, 0.5, 100)
 material = SubResource("StandardMaterial3D_f3sb7")
-
-[node name="Player" type="CharacterBody3D" parent="." unique_id=1493413393]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6985092, 0, 0)
-script = ExtResource("1_a02cp")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=575347850]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7902699, 0)
-layers = 2
-mesh = SubResource("CapsuleMesh_y8xib")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1834240326]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7902699, 0)
-shape = SubResource("ConvexPolygonShape3D_036b0")
-
-[node name="Head" type="Node3D" parent="Player" unique_id=677864912]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.23569, 0)
-
-[node name="Camera3D" type="Camera3D" parent="Player/Head" unique_id=2021033005]
-current = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=85879333]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1703396, 0)
 use_collision = true
 
-[node name="BorderWalls" type="CSGBox3D" parent="CSGCombiner3D" unique_id=867958392]
+[node name="BorderWalls" type="CSGBox3D" parent="CSGCombiner3D" unique_id=867958392 groups=["maze_walls"]]
 size = Vector3(100, 10, 100)
 
-[node name="InnerWalls" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2008802063]
+[node name="InnerWalls" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2008802063 groups=["maze_walls"]]
 operation = 2
 size = Vector3(99.5, 11, 99.5)
 material = SubResource("StandardMaterial3D_32w75")
 
-[node name="CSGBox3D V" type="CSGBox3D" parent="CSGCombiner3D" unique_id=231159360]
+[node name="CSGBox3D V" type="CSGBox3D" parent="CSGCombiner3D" unique_id=231159360 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.6902, -1.066124, 34.998394)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V9" type="CSGBox3D" parent="CSGCombiner3D" unique_id=382093123]
+[node name="CSGBox3D V9" type="CSGBox3D" parent="CSGCombiner3D" unique_id=382093123 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.6902, -1.066124, 44.998394)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V10" type="CSGBox3D" parent="CSGCombiner3D" unique_id=737405976]
+[node name="CSGBox3D V10" type="CSGBox3D" parent="CSGCombiner3D" unique_id=737405976 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.6902, -1.066124, 44.998394)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V11" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1435670713]
+[node name="CSGBox3D V11" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1435670713 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.690201, -1.066124, 44.998394)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V12" type="CSGBox3D" parent="CSGCombiner3D" unique_id=189602349]
+[node name="CSGBox3D V12" type="CSGBox3D" parent="CSGCombiner3D" unique_id=189602349 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.309799, -1.066124, 44.998394)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V2" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1501577211]
+[node name="CSGBox3D V2" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1501577211 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.6902, -1.066124, 39.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V25" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1468861119]
+[node name="CSGBox3D V25" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1468861119 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.690201, -1.066124, 29.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V26" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1723384463]
+[node name="CSGBox3D V26" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1723384463 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 15.309799, -1.066124, 29.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V51" type="CSGBox3D" parent="CSGCombiner3D" unique_id=407765610]
+[node name="CSGBox3D V51" type="CSGBox3D" parent="CSGCombiner3D" unique_id=407765610 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 15.309799, -1.066124, -40.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V54" type="CSGBox3D" parent="CSGCombiner3D" unique_id=106668845]
+[node name="CSGBox3D V54" type="CSGBox3D" parent="CSGCombiner3D" unique_id=106668845 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.309799, -1.066124, -40.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V52" type="CSGBox3D" parent="CSGCombiner3D" unique_id=446756463]
+[node name="CSGBox3D V52" type="CSGBox3D" parent="CSGCombiner3D" unique_id=446756463 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 15.309799, -1.066124, -30.007301)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V53" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1459180007]
+[node name="CSGBox3D V53" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1459180007 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.309799, -1.066124, -30.007301)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V27" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1653532214]
+[node name="CSGBox3D V27" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1653532214 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 25.3098, -1.066124, 29.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V28" type="CSGBox3D" parent="CSGCombiner3D" unique_id=643579446]
+[node name="CSGBox3D V28" type="CSGBox3D" parent="CSGCombiner3D" unique_id=643579446 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 45.3098, -1.066124, 29.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V29" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1717503827]
+[node name="CSGBox3D V29" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1717503827 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 45.3098, -1.066124, 19.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V30" type="CSGBox3D" parent="CSGCombiner3D" unique_id=214300420]
+[node name="CSGBox3D V30" type="CSGBox3D" parent="CSGCombiner3D" unique_id=214300420 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 25.3098, -1.066124, 19.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V50" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1714816855]
+[node name="CSGBox3D V50" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1714816855 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 25.3098, -1.066124, -40.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V31" type="CSGBox3D" parent="CSGCombiner3D" unique_id=990073837]
+[node name="CSGBox3D V31" type="CSGBox3D" parent="CSGCombiner3D" unique_id=990073837 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.309799, -1.066124, 19.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V32" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1383718025]
+[node name="CSGBox3D V32" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1383718025 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14.690201, -1.066124, 19.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V4" type="CSGBox3D" parent="CSGCombiner3D" unique_id=722331658]
+[node name="CSGBox3D V4" type="CSGBox3D" parent="CSGCombiner3D" unique_id=722331658 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.309799, -1.066124, 39.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V6" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1445320181]
+[node name="CSGBox3D V6" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1445320181 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 25.3098, -1.066124, 39.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V23" type="CSGBox3D" parent="CSGCombiner3D" unique_id=125489642]
+[node name="CSGBox3D V23" type="CSGBox3D" parent="CSGCombiner3D" unique_id=125489642 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 35.3098, -1.066124, 39.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V46" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1649383357]
+[node name="CSGBox3D V46" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1649383357 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 35.3098, -1.066124, 9.992699)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V47" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1510065665]
+[node name="CSGBox3D V47" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1510065665 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 35.3098, -1.066124, -0.0073013306)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V48" type="CSGBox3D" parent="CSGCombiner3D" unique_id=205526227]
+[node name="CSGBox3D V48" type="CSGBox3D" parent="CSGCombiner3D" unique_id=205526227 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 35.3098, -1.066124, -10.007301)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V55" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2069210578]
+[node name="CSGBox3D V55" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2069210578 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 5.309799, -1.066124, -10.007301)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V56" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1040870877]
+[node name="CSGBox3D V56" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1040870877 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.690201, -1.066124, -10.007301)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V57" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1135648271]
+[node name="CSGBox3D V57" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1135648271 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14.690201, -1.066124, -10.007301)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V49" type="CSGBox3D" parent="CSGCombiner3D" unique_id=239935355]
+[node name="CSGBox3D V49" type="CSGBox3D" parent="CSGCombiner3D" unique_id=239935355 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 35.3098, -1.066124, -30.007301)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V24" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1116185550]
+[node name="CSGBox3D V24" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1116185550 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 45.3098, -1.066124, 39.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V13" type="CSGBox3D" parent="CSGCombiner3D" unique_id=785041861]
+[node name="CSGBox3D V13" type="CSGBox3D" parent="CSGCombiner3D" unique_id=785041861 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.6902, -1.066124, 19.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V16" type="CSGBox3D" parent="CSGCombiner3D" unique_id=171931972]
+[node name="CSGBox3D V16" type="CSGBox3D" parent="CSGCombiner3D" unique_id=171931972 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -44.6902, -1.066124, -30.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V17" type="CSGBox3D" parent="CSGCombiner3D" unique_id=996644209]
+[node name="CSGBox3D V17" type="CSGBox3D" parent="CSGCombiner3D" unique_id=996644209 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.6902, -1.066124, -30.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V20" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1991607715]
+[node name="CSGBox3D V20" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1991607715 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.6902, -1.066124, -40.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V21" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1024126467]
+[node name="CSGBox3D V21" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1024126467 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24.6902, -1.066124, -40.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V18" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1630243600]
+[node name="CSGBox3D V18" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1630243600 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -24.6902, -1.066124, -30.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V19" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1656345114]
+[node name="CSGBox3D V19" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1656345114 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14.690201, -1.066124, -30.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V14" type="CSGBox3D" parent="CSGCombiner3D" unique_id=187949397]
+[node name="CSGBox3D V14" type="CSGBox3D" parent="CSGCombiner3D" unique_id=187949397 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.6902, -1.066124, -0.007299423)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V58" type="CSGBox3D" parent="CSGCombiner3D" unique_id=809196585]
+[node name="CSGBox3D V58" type="CSGBox3D" parent="CSGCombiner3D" unique_id=809196585 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -14.690201, -1.066124, -0.007299423)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V59" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1266284542]
+[node name="CSGBox3D V59" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1266284542 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.690201, -1.066124, -0.007299423)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V15" type="CSGBox3D" parent="CSGCombiner3D" unique_id=654095675]
+[node name="CSGBox3D V15" type="CSGBox3D" parent="CSGCombiner3D" unique_id=654095675 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.6902, -1.066124, -10.007299)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V3" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1296501946]
+[node name="CSGBox3D V3" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1296501946 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.690199, -1.066124, 24.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V33" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1859930926]
+[node name="CSGBox3D V33" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1859930926 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.690199, -1.066124, 24.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V34" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1123863226]
+[node name="CSGBox3D V34" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1123863226 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.309801, -1.066124, 24.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V35" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1580148109]
+[node name="CSGBox3D V35" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1580148109 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.309801, -1.066124, 24.9927)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V5" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1807872135]
+[node name="CSGBox3D V5" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1807872135 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.6902, -1.066124, 4.9927006)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V36" type="CSGBox3D" parent="CSGCombiner3D" unique_id=420712333]
+[node name="CSGBox3D V36" type="CSGBox3D" parent="CSGCombiner3D" unique_id=420712333 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.6902, -1.066124, 14.992701)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V37" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1359752548]
+[node name="CSGBox3D V37" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1359752548 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.690201, -1.066124, 14.992701)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V38" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1341851615]
+[node name="CSGBox3D V38" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1341851615 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3097992, -1.066124, 14.992701)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V39" type="CSGBox3D" parent="CSGCombiner3D" unique_id=782216840]
+[node name="CSGBox3D V39" type="CSGBox3D" parent="CSGCombiner3D" unique_id=782216840 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.309799, -1.066124, 14.992701)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V40" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1385304415]
+[node name="CSGBox3D V40" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1385304415 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3098, -1.066124, 14.992701)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V60" type="CSGBox3D" parent="CSGCombiner3D" unique_id=388854428]
+[node name="CSGBox3D V60" type="CSGBox3D" parent="CSGCombiner3D" unique_id=388854428 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3098, -1.066124, 4.9927006)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V61" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1481509718]
+[node name="CSGBox3D V61" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1481509718 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3098, -1.066124, -5.0072994)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V62" type="CSGBox3D" parent="CSGCombiner3D" unique_id=751450706]
+[node name="CSGBox3D V62" type="CSGBox3D" parent="CSGCombiner3D" unique_id=751450706 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3098, -1.066124, -15.007299)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V63" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1259987019]
+[node name="CSGBox3D V63" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1259987019 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.3098, -1.066124, -25.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V64" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1428489982]
+[node name="CSGBox3D V64" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1428489982 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.309799, -1.066124, -25.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V67" type="CSGBox3D" parent="CSGCombiner3D" unique_id=516107492]
+[node name="CSGBox3D V67" type="CSGBox3D" parent="CSGCombiner3D" unique_id=516107492 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.309799, -1.066124, -5.0072994)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V65" type="CSGBox3D" parent="CSGCombiner3D" unique_id=57030877]
+[node name="CSGBox3D V65" type="CSGBox3D" parent="CSGCombiner3D" unique_id=57030877 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.690201, -1.066124, -25.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V66" type="CSGBox3D" parent="CSGCombiner3D" unique_id=42513060]
+[node name="CSGBox3D V66" type="CSGBox3D" parent="CSGCombiner3D" unique_id=42513060 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -29.6902, -1.066124, -25.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V41" type="CSGBox3D" parent="CSGCombiner3D" unique_id=858419792]
+[node name="CSGBox3D V41" type="CSGBox3D" parent="CSGCombiner3D" unique_id=858419792 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.3098, -1.066124, 14.992701)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V42" type="CSGBox3D" parent="CSGCombiner3D" unique_id=663388487]
+[node name="CSGBox3D V42" type="CSGBox3D" parent="CSGCombiner3D" unique_id=663388487 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.3098, -1.066124, 4.9927006)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V43" type="CSGBox3D" parent="CSGCombiner3D" unique_id=38152658]
+[node name="CSGBox3D V43" type="CSGBox3D" parent="CSGCombiner3D" unique_id=38152658 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.3098, -1.066124, -15.007299)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V44" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2053355363]
+[node name="CSGBox3D V44" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2053355363 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.3098, -1.066124, -35.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V45" type="CSGBox3D" parent="CSGCombiner3D" unique_id=860173404]
+[node name="CSGBox3D V45" type="CSGBox3D" parent="CSGCombiner3D" unique_id=860173404 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.3098, -1.066124, -45.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V7" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1461518697]
+[node name="CSGBox3D V7" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1461518697 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.6902, -1.066124, -15.007299)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D H" type="CSGBox3D" parent="CSGCombiner3D" unique_id=724553166]
+[node name="CSGBox3D H" type="CSGBox3D" parent="CSGCombiner3D" unique_id=724553166 groups=["maze_walls"]]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -34.6902, -1.066124, -20.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V8" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1802913514]
+[node name="CSGBox3D V8" type="CSGBox3D" parent="CSGCombiner3D" unique_id=1802913514 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -39.6902, -1.066124, -45.0073)
 size = Vector3(0.5, 8.758301, 10)
 
-[node name="CSGBox3D V22" type="CSGBox3D" parent="CSGCombiner3D" unique_id=394938925]
+[node name="CSGBox3D V22" type="CSGBox3D" parent="CSGCombiner3D" unique_id=394938925 groups=["maze_walls"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.690201, -1.066124, -45.0073)
 size = Vector3(0.5, 8.758301, 10)

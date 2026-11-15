@@ -16,17 +16,20 @@ func _ready():
 	set_process_unhandled_input(false)
 	set_process_unhandled_key_input(false)
 
-func _unhandled_input(event):
+func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		head.rotate_y(-event.relative.x * look_sensitivity)
 		camera.rotate_x(-event.relative.y * look_sensitivity)
 		camera.rotation.x = clamp(camera.rotation.x, deg_to_rad(-80), deg_to_rad(80))
 
-	if Input.is_action_just_pressed("escape"):
+	if event.is_action_pressed("escape"):
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
-	if event is InputEventMouseButton and event.pressed:
+
+	if event is InputEventMouseButton and event.pressed and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
 		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+func _unhandled_input(_event: InputEvent) -> void:
+	pass  # can remove this entirely now
 
 func enable_local_input() -> void:
 	set_process(true)
