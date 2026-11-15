@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bvbt1k6672ibn"]
+
+[ext_resource type="Script" uid="uid://ds3425x4v74w2" path="res://Scripts/MazeGameManager.gd" id="1_u11qv"]
+
+[node name="MazeArea" type="Node3D" unique_id=626886955]
+
+[node name="MazeManager" type="Node3D" parent="." unique_id=1158878910]
+script = ExtResource("1_u11qv")
