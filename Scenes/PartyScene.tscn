@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bide13jrm2qcp"]
 
-[ext_resource type="Texture2D" uid="uid://bmlwi1lt40ijh" path="res://Sprites/MinigameSprites/CardMinigame/Background.png" id="1_6mql1"]
+[ext_resource type="Texture2D" uid="uid://cslg0n0man7rx" path="res://Sprites/iu_.png" id="1_bwsec"]
 [ext_resource type="Script" uid="uid://clvyp2qwlmuf1" path="res://Scripts/LobbyManager.gd" id="1_vk573"]
 [ext_resource type="Texture2D" uid="uid://cchehxlnhgbm3" path="res://addons/at-icons/node/arrows_counterclockwise.svg" id="2_ucoc3"]
 [ext_resource type="Texture2D" uid="uid://bdy5u62xnfix7" path="res://addons/at-icons/node/chair.svg" id="3_0rtbq"]
@@ -84,7 +84,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_6mql1")
+texture = ExtResource("1_bwsec")
 
 [node name="Node" type="Node" parent="." unique_id=12997358 node_paths=PackedStringArray("lobby_list", "lobbiesText", "status_label", "create_menu", "lobby_name_input", "lobby_password_input", "lobby_players_input", "lobby_create_status", "default_lobby_listing", "join_password_panel", "join_password_input", "join_password_submit_button", "lobby_viewer", "lobby_viewer_players", "lobby_name_label", "start_lobby_button")]
 script = ExtResource("1_vk573")
