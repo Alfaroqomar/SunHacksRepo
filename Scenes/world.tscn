@@ -47,6 +47,7 @@ size = Vector3(100, 0.5, 100)
 material = SubResource("StandardMaterial3D_f3sb7")
 
 [node name="Player" type="CharacterBody3D" parent="." unique_id=1493413393]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6985092, 0, 0)
 script = ExtResource("1_a02cp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=575347850]
@@ -66,13 +67,12 @@ current = true
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="." unique_id=85879333]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.1703396, 0)
+use_collision = true
 
 [node name="BorderWalls" type="CSGBox3D" parent="CSGCombiner3D" unique_id=867958392]
-visible = false
 size = Vector3(100, 10, 100)
 
 [node name="InnerWalls" type="CSGBox3D" parent="CSGCombiner3D" unique_id=2008802063]
-visible = false
 operation = 2
 size = Vector3(99.5, 11, 99.5)
 material = SubResource("StandardMaterial3D_32w75")
