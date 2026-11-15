@@ -51,6 +51,7 @@ script = ExtResource("1_a02cp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=575347850]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7902699, 0)
+layers = 2
 mesh = SubResource("CapsuleMesh_y8xib")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Player" unique_id=1834240326]

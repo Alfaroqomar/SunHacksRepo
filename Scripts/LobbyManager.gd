@@ -254,6 +254,7 @@ func _on_start_lobby_button_pressed() -> void:
 	MinigameManager.is_host = GDSync.is_host()
 	set_players_for_game()
 	GDSync.change_scene("res://GameBoard/test_board.tscn")
+	# changing the change scene input later
 
 func close_lobby_viewer():
 	lobby_viewer.visible = false
