@@ -284,4 +284,4 @@ func _rpc_end_game(won: bool) -> void:
 
 	if MinigameManager.is_host:
 		await get_tree().create_timer(3.0).timeout
-		GDSync.change_scene("res://Scenes/PartyScene.tscn") # ← adjust to your lobby path
+		GDSync.change_scene("res://Scenes/MainMenu.tscn") # ← adjust to your lobby path

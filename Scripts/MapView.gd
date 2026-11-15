@@ -28,6 +28,7 @@ extends Control
 @export var chat_font: FontFile
 @export var chat_font_size: int = 16
 
+@export var map_camera: Camera3D
 @export var maze_manager: MazeGameManager
 
 ## The MapArea Control — provides the pixel size for coordinate conversion.
@@ -98,37 +99,37 @@ func _start_player_pulse() -> void:
 	tween.tween_interval(2.0)  # pause between pulses
 ## Places the exit icon using the 3-D world position of exit_area.
 ## Called once at startup; the exit never moves.
-func _place_exit_icon() -> void:
-	if exit_icon == null or maze_manager == null:
-		return
-	if maze_manager.exit_area == null:
-		push_warning("MapView: maze_manager.exit_area is null; exit icon not placed")
-		return
-	exit_icon.position = world_to_map_px(maze_manager.exit_area.global_position) - exit_icon.size * 0.5
-	exit_icon.visible = true
+
 
 # ─── Coordinate Conversion ───────────────────────────────────────────────────
 
 ## Maps a 3-D world position (XZ plane) to a pixel position inside MapArea.
 ## Y is ignored — the map is a top-down projection of the floor.
 func world_to_map_px(world_pos: Vector3) -> Vector2:
-	if map_area == null:
+	if map_camera == null or map_viewport == null or map_area == null:
 		return Vector2.ZERO
-	var t := Vector2(
-		inverse_lerp(maze_world_min.x, maze_world_max.x, world_pos.x),
-		inverse_lerp(maze_world_min.y, maze_world_max.y, world_pos.z)
-	)
-	return t * map_area.size
+	# Let the camera's own projection do the conversion
+	var screen_pos := map_camera.unproject_position(world_pos)
+	# Normalize to SubViewport size, then scale to MapArea pixel size
+	var normalized := screen_pos / Vector2(map_viewport.size)
+	return normalized * map_area.size
 
 # ─── Signal Handlers ─────────────────────────────────────────────────────────
 
 func _on_maze_player_moved(world_pos: Vector3) -> void:
 	if player_icon == null:
 		return
-	# Show the dot on the first position update (it starts hidden).
 	if not player_icon.visible:
 		player_icon.visible = true
-	player_icon.position = world_to_map_px(world_pos) - player_icon.size * 0.5
+	# Hardcode offset based on the 32x32 size set in scene
+	player_icon.position = world_to_map_px(world_pos) - Vector2(16, 16)
+
+
+func _place_exit_icon() -> void:
+	if exit_icon == null or maze_manager == null or maze_manager.exit_area == null:
+		return
+	exit_icon.position = world_to_map_px(maze_manager.exit_area.global_position) - Vector2(16, 16)
+	exit_icon.visible = true
 
 
 func _on_enemy_positions_updated(positions: Dictionary) -> void:

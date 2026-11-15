@@ -11,8 +11,9 @@ ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
 sky_material = SubResource("ProceduralSkyMaterial_fj7yv")
 
 [sub_resource type="Environment" id="Environment_aqk2v"]
-background_mode = 2
+background_mode = 1
 sky = SubResource("Sky_tlwt5")
+ambient_light_source = 1
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3sb7"]
@@ -31,7 +32,7 @@ uv1_triplanar = true
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=2070550084]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
-light_energy = 0.01
+light_energy = 0.0
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=339301906]

@@ -4,6 +4,7 @@ extends CharacterBody3D
 
 @onready var head = $Head
 @onready var camera = $Head/Camera3D
+@onready var flashlight = $Head/Camera3D/SpotLight3D
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
@@ -15,6 +16,8 @@ func _ready():
 	set_process_input(false)
 	set_process_unhandled_input(false)
 	set_process_unhandled_key_input(false)
+	if flashlight:
+		flashlight.visible = false
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
@@ -38,6 +41,8 @@ func enable_local_input() -> void:
 	set_process_unhandled_input(true)
 	set_process_unhandled_key_input(true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if flashlight:
+		flashlight.visible = true
 
 func _physics_process(delta):
 	# Add the gravity.
