@@ -113,6 +113,9 @@ func _setup_local_view() -> void:
 
 	if my_role == Role.MAZE_PLAYER:
 		_spawn_maze_player()
+	else:
+		# Map player needs the cursor free for the chat panel.
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 
 func _spawn_maze_player() -> void:
@@ -120,9 +123,9 @@ func _spawn_maze_player() -> void:
 		push_error("MazeGameManager: maze_player_scene is not set")
 		return
 	maze_player_node = maze_player_scene.instantiate() as CharacterBody3D
-	add_child(maze_player_node)
-	# Optionally position at a spawn marker in your scene:
-	# maze_player_node.global_position = $MazeSpawn.global_position
+	add_child(maze_player_node)              # ← _ready() fires here, disabling processing
+	if maze_player_node.has_method("enable_local_input"):
+		maze_player_node.enable_local_input() # ← now runs AFTER _ready(), so it sticks
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Position Sync  (maze player → everyone, via RPC)
@@ -202,7 +205,9 @@ func _rpc_end_game(won: bool) -> void:
 		return   # already ended; drop the duplicate
 	game_state = GameState.WON if won else GameState.LOST
 	game_ended.emit(won)
+	# Release the cursor for everyone so the end screen is usable.
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 
 	if MinigameManager.is_host:
 		await get_tree().create_timer(3.0).timeout
-		GDSync.change_scene("res://Scenes/Lobby.tscn")   # ← adjust to your lobby path
+		GDSync.change_scene("res://Scenes/Lobby.tscn") # ← adjust to your lobby path
