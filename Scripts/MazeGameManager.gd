@@ -32,6 +32,7 @@ const GEMINI_PROMPTS: Array[String] = [
 @export var position_sync_interval: float = 1.0
 @export var exit_trigger_distance: float = 4.0
 
+var _maze_player_world_pos: Vector3 = Vector3.ZERO
 ## The 3-D character scene.  Instantiated only on the MAZE_PLAYER's machine.
 @export var maze_player_scene: PackedScene
 
@@ -62,11 +63,12 @@ var _sync_timer: float = 0.0
 
 # ─── Signals (MapView and UI connect to these) ────────────────────────────────
 
-signal maze_player_moved(world_pos: Vector3)
+signal maze_player_moved(world_pos: Vector3, facing_angle: float)
 ## { enemy_id: int → world_pos: Vector3 }
 signal enemy_positions_updated(positions: Dictionary)
 signal chat_received(sender_id: int, username: String, color: Color, message: String)
 signal game_ended(won: bool)
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Ready
@@ -163,7 +165,9 @@ func _process(delta: float) -> void:
 	_sync_timer += delta
 	if _sync_timer >= position_sync_interval:
 		_sync_timer = 0.0
-		GDSync.call_func_all(_rpc_maze_player_position, maze_player_node.global_position)
+	GDSync.call_func_all(_rpc_maze_player_position,
+		maze_player_node.global_position,
+		maze_player_node.get_node("Head").rotation.y)
 
 	# Exit proximity check
 	if exit_area == null:
@@ -173,8 +177,9 @@ func _process(delta: float) -> void:
 		GDSync.call_func_all(_rpc_end_game, true)
 
 ## Received by every client.  MapView connects to maze_player_moved to update the dot.
-func _rpc_maze_player_position(world_pos: Vector3) -> void:
-	maze_player_moved.emit(world_pos)
+func _rpc_maze_player_position(world_pos: Vector3, facing_angle: float) -> void:
+	_maze_player_world_pos = world_pos
+	maze_player_moved.emit(world_pos, facing_angle)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # Enemy Sync  (host → everyone)

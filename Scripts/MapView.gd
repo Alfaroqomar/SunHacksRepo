@@ -116,13 +116,14 @@ func world_to_map_px(world_pos: Vector3) -> Vector2:
 
 # ─── Signal Handlers ─────────────────────────────────────────────────────────
 
-func _on_maze_player_moved(world_pos: Vector3) -> void:
+func _on_maze_player_moved(world_pos: Vector3, facing_angle: float) -> void:
 	if player_icon == null:
 		return
 	if not player_icon.visible:
 		player_icon.visible = true
-	# Hardcode offset based on the 32x32 size set in scene
+	player_icon.pivot_offset = Vector2(16, 16)  # rotate around center
 	player_icon.position = world_to_map_px(world_pos) - Vector2(16, 16)
+	player_icon.rotation = -facing_angle  # negate: 3D Y is CCW, 2D is CW
 
 
 func _place_exit_icon() -> void:
