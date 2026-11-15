@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cla6yda1n167s"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_y8xib"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_32w75"]
+
+[node name="Maze" type="Node3D" unique_id=1075054082]
+
+[node name="MazeWall" type="StaticBody3D" parent="." unique_id=1374758353]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MazeWall" unique_id=489696317]
+shape = SubResource("BoxShape3D_y8xib")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="MazeWall" unique_id=507124108]
+mesh = SubResource("BoxMesh_32w75")
