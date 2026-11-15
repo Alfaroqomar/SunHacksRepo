@@ -1,8 +1,84 @@
 [gd_scene format=3 uid="uid://bvbt1k6672ibn"]
 
 [ext_resource type="Script" uid="uid://ds3425x4v74w2" path="res://Scripts/MazeGameManager.gd" id="1_u11qv"]
+[ext_resource type="PackedScene" uid="uid://ckavqb25bdaul" path="res://Scenes/world.tscn" id="2_pr66p"]
+[ext_resource type="Script" uid="uid://c1dn5bp5k6tjs" path="res://Scripts/MapView.gd" id="2_ur3ut"]
+[ext_resource type="Texture2D" uid="uid://cscjjt55iw2cu" path="res://addons/phantom_camera/examples/textures/2D/player_sprite.svg" id="4_ia43w"]
+[ext_resource type="Texture2D" uid="uid://bka7kdg1a7eq4" path="res://addons/at-icons/node2d/doorway_exit.svg" id="5_xui23"]
 
 [node name="MazeArea" type="Node3D" unique_id=626886955]
 
-[node name="MazeManager" type="Node3D" parent="." unique_id=1158878910]
+[node name="MazeManager" type="Node3D" parent="." unique_id=1158878910 node_paths=PackedStringArray("map_view_node", "exit_area")]
 script = ExtResource("1_u11qv")
+map_view_node = NodePath("")
+exit_area = NodePath("../ExitArea/Area3D")
+
+[node name="World" parent="." unique_id=240199409 instance=ExtResource("2_pr66p")]
+
+[node name="ExitArea" type="Node3D" parent="." unique_id=702113566]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.692439, 3.7544937, -10.214518)
+
+[node name="Area3D" type="Area3D" parent="ExitArea" unique_id=1795914637]
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=265288425]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=62084778]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 40.96486, 0)
+cull_mask = 1047553
+projection = 1
+size = 30.0
+
+[node name="PlayerIcon" type="Control" parent="." unique_id=1921117367]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="PlayerIcon" unique_id=625561023]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_ia43w")
+
+[node name="ExitIcon" type="Control" parent="." unique_id=1366521394]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="ExitIcon" unique_id=439451687]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = -64.0
+offset_right = 64.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_xui23")
+
+[node name="MapViewNode" type="Control" parent="." unique_id=674099558 node_paths=PackedStringArray("maze_manager", "map_viewport", "player_icon", "exit_icon")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_ur3ut")
+maze_manager = NodePath("../MazeManager")
+map_viewport = NodePath("../SubViewport")
+player_icon = NodePath("../PlayerIcon")
+exit_icon = NodePath("../ExitIcon")
