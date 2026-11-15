@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://ds3425x4v74w2" path="res://Scripts/MazeGameManager.gd" id="1_u11qv"]
 [ext_resource type="PackedScene" uid="uid://ckavqb25bdaul" path="res://Scenes/world.tscn" id="2_pr66p"]
 [ext_resource type="Script" uid="uid://c1dn5bp5k6tjs" path="res://Scripts/MapView.gd" id="2_ur3ut"]
+<<<<<<< Updated upstream
 [ext_resource type="Texture2D" uid="uid://b5x8dtdeql2f8" path="res://addons/at-icons/mesh/person_body.svg" id="5_wec26"]
 [ext_resource type="Texture2D" uid="uid://cox8u0daw2kt" path="res://addons/at-icons/control/doorway_exit.svg" id="6_g6fvp"]
 [ext_resource type="PackedScene" uid="uid://badnyacw7w11f" path="res://Scenes/player.tscn" id="6_wec26"]
@@ -15,6 +16,11 @@ background_energy_multiplier = 0.5
 ambient_light_source = 2
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_energy = 0.5
+=======
+[ext_resource type="Texture2D" uid="uid://cscjjt55iw2cu" path="res://addons/phantom_camera/examples/textures/2D/player_sprite.svg" id="4_ia43w"]
+[ext_resource type="Texture2D" uid="uid://bka7kdg1a7eq4" path="res://addons/at-icons/node2d/doorway_exit.svg" id="5_xui23"]
+[ext_resource type="PackedScene" uid="uid://badnyacw7w11f" path="res://Scenes/player.tscn" id="6_wec26"]
+>>>>>>> Stashed changes
 
 [node name="MazeArea" type="Node3D" unique_id=626886955]
 
@@ -153,8 +159,24 @@ offset_left = 5.0
 offset_top = 10.0
 offset_right = -10.0
 offset_bottom = -10.0
+<<<<<<< Updated upstream
 grow_horizontal = 2
 grow_vertical = 0
+=======
+
+[node name="ChatScroll" type="ScrollContainer" parent="MapViewNode/ChatPanel" unique_id=889924146]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapViewNode/ChatPanel/ChatScroll" unique_id=132811489]
+layout_mode = 2
+size_flags_horizontal = 3
+>>>>>>> Stashed changes
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MapViewNode/ChatPanel" unique_id=1687321642]
 layout_mode = 1
@@ -179,6 +201,7 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("7_g6fvp")
 text = "Send"
 
+<<<<<<< Updated upstream
 [node name="VBoxContainer" type="VBoxContainer" parent="MapViewNode/ChatPanel" unique_id=132811489]
 layout_mode = 1
 anchors_preset = -1
@@ -192,3 +215,7 @@ alignment = 2
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1021609031]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 87.69461, 0)
 light_energy = 0.0
+=======
+[node name="Player" parent="." unique_id=504436970 instance=ExtResource("6_wec26")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.6305647, 2.5396576, 0)
+>>>>>>> Stashed changes
