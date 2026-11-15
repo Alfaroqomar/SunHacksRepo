@@ -10,7 +10,7 @@
 
 [node name="MazeManager" type="Node3D" parent="." unique_id=1158878910 node_paths=PackedStringArray("map_view_node", "exit_area")]
 script = ExtResource("1_u11qv")
-map_view_node = NodePath("")
+map_view_node = NodePath("../MapViewNode")
 exit_area = NodePath("../ExitArea/Area3D")
 
 [node name="World" parent="." unique_id=240199409 instance=ExtResource("2_pr66p")]
@@ -20,65 +20,136 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.692439, 3.7544937, -10.21
 
 [node name="Area3D" type="Area3D" parent="ExitArea" unique_id=1795914637]
 
-[node name="SubViewport" type="SubViewport" parent="." unique_id=265288425]
+[node name="MapViewNode" type="Control" parent="." unique_id=674099558 node_paths=PackedStringArray("maze_manager", "map_area", "map_viewport", "player_icon", "exit_icon", "enemy_icons_container", "chat_container", "chat_scroll", "chat_input", "send_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_ur3ut")
+maze_manager = NodePath("../MazeManager")
+map_area = NodePath("MapArea")
+map_viewport = NodePath("MapArea/SubViewportContainer/SubViewport")
+player_icon = NodePath("MapArea/PlayerIcon")
+exit_icon = NodePath("MapArea/ExitIcon")
+enemy_icons_container = NodePath("MapArea/EnemyIcons")
+chat_container = NodePath("ChatPanel/ChatScroll/VBoxContainer")
+chat_scroll = NodePath("ChatPanel/ChatScroll")
+chat_input = NodePath("ChatPanel/HBoxContainer/ChatInput")
+send_button = NodePath("ChatPanel/HBoxContainer/Button")
 
-[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=62084778]
+[node name="MapArea" type="Control" parent="MapViewNode" unique_id=1708036571]
+layout_mode = 1
+anchor_top = 0.2
+anchor_right = 0.6
+anchor_bottom = 0.8
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MapViewNode/MapArea" unique_id=1818914795]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MapViewNode/MapArea/SubViewportContainer" unique_id=265288425]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="MapViewNode/MapArea/SubViewportContainer/SubViewport" unique_id=62084778]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 40.96486, 0)
 cull_mask = 1047553
 projection = 1
-size = 30.0
+size = 90.0
 
-[node name="PlayerIcon" type="Control" parent="." unique_id=1921117367]
+[node name="PlayerIcon" type="Control" parent="MapViewNode/MapArea" unique_id=1921117367]
 visible = false
-layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="PlayerIcon" unique_id=625561023]
+[node name="TextureRect" type="TextureRect" parent="MapViewNode/MapArea/PlayerIcon" unique_id=625561023]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_ia43w")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="ExitIcon" type="Control" parent="." unique_id=1366521394]
+[node name="ExitIcon" type="Control" parent="MapViewNode/MapArea" unique_id=1366521394]
 visible = false
-layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 32.0
+offset_bottom = 32.0
+mouse_filter = 2
 
-[node name="TextureRect" type="TextureRect" parent="ExitIcon" unique_id=439451687]
+[node name="TextureRect" type="TextureRect" parent="MapViewNode/MapArea/ExitIcon" unique_id=439451687]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -64.0
-offset_top = -64.0
-offset_right = 64.0
-offset_bottom = 64.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_xui23")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="MapViewNode" type="Control" parent="." unique_id=674099558 node_paths=PackedStringArray("maze_manager", "map_viewport", "player_icon", "exit_icon")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("2_ur3ut")
-maze_manager = NodePath("../MazeManager")
-map_viewport = NodePath("../SubViewport")
-player_icon = NodePath("../PlayerIcon")
-exit_icon = NodePath("../ExitIcon")
+[node name="EnemyIcons" type="Control" parent="MapViewNode/MapArea" unique_id=123456789]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="ChatPanel" type="Control" parent="MapViewNode" unique_id=770146171]
+layout_mode = 1
+anchor_left = 0.65
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 5.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+
+[node name="ChatScroll" type="ScrollContainer" parent="MapViewNode/ChatPanel" unique_id=889924146]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -48.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MapViewNode/ChatPanel/ChatScroll" unique_id=132811489]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MapViewNode/ChatPanel" unique_id=1687321642]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -44.0
+offset_bottom = -4.0
+
+[node name="ChatInput" type="LineEdit" parent="MapViewNode/ChatPanel/HBoxContainer" unique_id=831021855]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Type a hint..."
+
+[node name="Button" type="Button" parent="MapViewNode/ChatPanel/HBoxContainer" unique_id=1949519298]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Send"

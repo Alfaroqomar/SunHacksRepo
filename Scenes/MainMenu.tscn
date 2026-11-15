@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://baknr2y3q4228" path="res://Fonts/Dreadful-Regular.otf" id="3_ghw46"]
 [ext_resource type="Texture2D" uid="uid://d0i0judyy5dhw" path="res://Sprites/MinigameSprites/CardMinigame/Gamejam_card_symbols.png" id="4_xim88"]
 [ext_resource type="Shader" uid="uid://ct3bufaq0u4ef" path="res://Scenes/texture_particles.gdshader" id="5_koqhg"]
-[ext_resource type="FontFile" uid="uid://b2bv8sjbahkb1" path="res://Fonts/Those-Glitch-Regular.otf" id="8_koqhg"]
+[ext_resource type="FontFile" uid="uid://dduf06n5a2k4p" path="res://Fonts/Jokerman.otf" id="8_koqhg"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ghw46"]
 lifetime_randomness = 0.5
@@ -52,14 +52,14 @@ shader_parameter/fade_out_fraction = 0.7
 shader_parameter/lifetime_min_fraction = 1.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ghw46"]
-bg_color = Color(0.6039216, 0.3019608, 0.58431375, 1)
+bg_color = Color(0.6431373, 0.53333336, 0.9764706, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="LabelSettings" id="LabelSettings_df05h"]
-font = ExtResource("3_ghw46")
+font = ExtResource("8_koqhg")
 font_size = 40
 font_color = Color(0.19607843, 0.1882353, 0.19215687, 1)
 
@@ -159,7 +159,7 @@ offset_right = -23.199982
 offset_bottom = 40.0
 
 [node name="PartyButton" type="Button" parent="VBoxContainer" unique_id=1562865338]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer/PartyButton" unique_id=359128503]
@@ -170,7 +170,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-theme_override_fonts/normal_font = ExtResource("3_ghw46")
+theme_override_fonts/normal_font = ExtResource("8_koqhg")
 theme_override_font_sizes/normal_font_size = 40
 text = "Party"
 horizontal_alignment = 1
@@ -251,7 +251,7 @@ horizontal_alignment = 1
 [node name="NameEdit" type="LineEdit" parent="GameName/VBoxContainer" unique_id=1057310780]
 self_modulate = Color(1, 0.8862745, 0.72156864, 1)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_ghw46")
+theme_override_fonts/font = ExtResource("8_koqhg")
 theme_override_font_sizes/font_size = 30
 placeholder_text = "Input Name"
 alignment = 1
@@ -265,7 +265,7 @@ size_flags_vertical = 3
 [node name="Button" type="Button" parent="GameName/VBoxContainer" unique_id=1605470779]
 self_modulate = Color(1, 0.8862745, 0.72156864, 1)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("3_ghw46")
+theme_override_fonts/font = ExtResource("8_koqhg")
 theme_override_font_sizes/font_size = 30
 text = "Enter"
 
@@ -281,12 +281,11 @@ offset_left = -200.0
 offset_right = 200.0
 offset_bottom = 91.2
 grow_horizontal = 2
-theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/default_color = Color(0.6431373, 0.53333336, 0.9764706, 1)
 theme_override_constants/shadow_outline_size = 1
 theme_override_constants/outline_size = 8
 theme_override_fonts/normal_font = ExtResource("8_koqhg")
-theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/normal_font_size = 100
 theme_override_styles/normal = SubResource("StyleBoxEmpty_8um5k")
 bbcode_enabled = true
 text = "Andy's Maze"

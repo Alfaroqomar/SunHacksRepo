@@ -2,54 +2,47 @@ class_name MapView
 extends Control
 
 ## Overhead map shown to the MAP_PLAYER only.
-## Generates a top-down snapshot of the maze at game start using a SubViewport,
-## then overlays 2D icons for the runner, enemies, and exit.
+## SubViewportContainer renders the maze automatically — no manual bake needed.
 ##
-## ── Scene tree expected ──────────────────────────────────────────────────────
+## ── Expected scene tree ──────────────────────────────────────────────────────
 ##
-##   MapView (Control)  ← this script
-##   ├── MapArea (Control)
-##   │   ├── SubViewportContainer          ← resizes the viewport to fit
-##   │   │   └── SubViewport               ← own_world_3d = OFF
-##   │   │       └── Camera3D              ← Orthographic, pointing straight down
-##   │   │                                    cull_mask: exclude player layer
-##   │   ├── player_icon  (ColorRect / TextureRect dot)
-##   │   ├── exit_icon    (ColorRect / TextureRect dot, positioned in-editor)
-##   │   └── EnemyIcons   (Control, parent for spawned dots)
-##   └── ChatPanel (Control)
-##       ├── ChatScroll → ChatContainer (VBoxContainer)
-##       └── HBox → ChatInput + SendButton
-##
-## ── Render-layer setup (do this in the Inspector) ────────────────────────────
-##   • All maze MeshInstance3D nodes → VisualInstance3D → Layers: layer 1 ON
-##   • Player MeshInstance3D         → VisualInstance3D → Layers: layer 1 OFF, layer 2 ON
-##   • Overhead Camera3D Cull Mask   → layer 1 ON, layer 2 OFF
-##   This way the overview camera never sees the player; the 2D dot handles that.
+##   MapViewNode (Control, full-screen)   ← this script
+##   ├── MapArea (Control, left ~65%)
+##   │   ├── SubViewportContainer  (anchors_preset=15, fills MapArea)
+##   │   │   └── SubViewport  (own_world_3d = OFF)
+##   │   │       └── Camera3D  (Orthographic, top-down, cull_mask excludes player)
+##   │   ├── PlayerIcon   (Control 32×32, free layout, hidden at start)
+##   │   │   └── TextureRect  (anchors_preset=15)
+##   │   ├── ExitIcon     (Control 32×32, free layout, hidden at start)
+##   │   │   └── TextureRect  (anchors_preset=15)
+##   │   └── EnemyIcons   (Control, anchors_preset=15, mouse_filter=IGNORE)
+##   └── ChatPanel (Control, right ~35%)
+##       ├── ChatScroll  (ScrollContainer, fills top of ChatPanel)
+##       │   └── VBoxContainer  (chat lines added here)
+##       └── HBoxContainer  (40 px, pinned to bottom)
+##           ├── ChatInput  (LineEdit, expand-fill)
+##           └── Button "Send"
 
 # ─── Exports ─────────────────────────────────────────────────────────────────
 
 @export var maze_manager: MazeGameManager
 
-## The SubViewport that holds the overhead Camera3D.
-## Set own_world_3d = OFF so it shares your main 3-D scene.
-## Set update_mode = UPDATE_ONCE; we trigger the snapshot manually in _ready().
+## The MapArea Control — provides the pixel size for coordinate conversion.
+@export var map_area: Control
+
+## The SubViewport that holds the overhead Camera3D (for future use / size queries).
 @export var map_viewport: SubViewport
 
-## TextureRect that displays the SubViewport's render.
-## Assign this to a TextureRect whose parent is MapArea.
-@export var map_bg: TextureRect
-
-## 2-D overlay dot that follows the maze runner.
+## 2-D overlay dot that follows the maze runner.  Made visible on first position update.
 @export var player_icon: Control
 
-## 2-D overlay dot for the exit — position it over the exit in the editor;
-## it never moves at runtime.
+## 2-D overlay dot for the exit.  Positioned automatically from exit_area.global_position.
 @export var exit_icon: Control
 
 ## Parent Control for dynamically spawned enemy dots.
 @export var enemy_icons_container: Control
 
-## Small Control scene used for each enemy dot (e.g. a red ColorRect, 8×8 px).
+## Small Control scene for each enemy dot (e.g. a 12×12 red ColorRect).
 @export var enemy_icon_scene: PackedScene
 
 @export var chat_container: VBoxContainer
@@ -57,15 +50,13 @@ extends Control
 @export var chat_input: LineEdit
 @export var send_button: Button
 
-## World-space XZ extents of your maze floor.
-## Must match the orthographic camera's coverage so dots land correctly.
+## World-space XZ extents of your maze floor — must match the overhead camera coverage.
 @export var maze_world_min: Vector2 = Vector2(-50.0, -50.0)
 @export var maze_world_max: Vector2 = Vector2( 50.0,  50.0)
 
 # ─── Private ─────────────────────────────────────────────────────────────────
 
-## enemy_id (int) → Control node
-var _enemy_icons: Dictionary = {}
+var _enemy_icons: Dictionary = {}   # enemy_id: int → Control
 
 # ─── Ready ───────────────────────────────────────────────────────────────────
 
@@ -84,44 +75,43 @@ func _ready() -> void:
 	if chat_input:
 		chat_input.text_submitted.connect(func(_t: String) -> void: _on_send_pressed())
 
-	# Wait one frame so the 3-D scene is fully loaded before we snapshot it.
+	# Wait one frame so global_position on exit_area is valid.
 	await get_tree().process_frame
-	_bake_map_render()
+	_place_exit_icon()
 
 
-## Takes a one-shot render of the maze from the overhead camera and
-## assigns it to map_bg.  Called once at game start.
-func _bake_map_render() -> void:
-	if map_viewport == null or map_bg == null:
-		push_warning("MapView: map_viewport or map_bg not assigned — no render generated")
+## Places the exit icon using the 3-D world position of exit_area.
+## Called once at startup; the exit never moves.
+func _place_exit_icon() -> void:
+	if exit_icon == null or maze_manager == null:
 		return
-
-	# Trigger exactly one render frame, then stop.
-	map_viewport.render_target_update_mode = SubViewport.UPDATE_ONCE
-
-	# Wait for that frame to actually render before reading the texture.
-	await RenderingServer.frame_post_draw
-
-	map_bg.texture = map_viewport.get_texture()
+	if maze_manager.exit_area == null:
+		push_warning("MapView: maze_manager.exit_area is null; exit icon not placed")
+		return
+	exit_icon.position = world_to_map_px(maze_manager.exit_area.global_position) - exit_icon.size * 0.5
+	exit_icon.visible = true
 
 # ─── Coordinate Conversion ───────────────────────────────────────────────────
 
-## Converts a 3-D world position (XZ plane) to a 2-D pixel position on map_bg.
+## Maps a 3-D world position (XZ plane) to a pixel position inside MapArea.
 ## Y is ignored — the map is a top-down projection of the floor.
 func world_to_map_px(world_pos: Vector3) -> Vector2:
-	if map_bg == null:
+	if map_area == null:
 		return Vector2.ZERO
 	var t := Vector2(
 		inverse_lerp(maze_world_min.x, maze_world_max.x, world_pos.x),
 		inverse_lerp(maze_world_min.y, maze_world_max.y, world_pos.z)
 	)
-	return t * map_bg.size
+	return t * map_area.size
 
 # ─── Signal Handlers ─────────────────────────────────────────────────────────
 
 func _on_maze_player_moved(world_pos: Vector3) -> void:
 	if player_icon == null:
 		return
+	# Show the dot on the first position update (it starts hidden).
+	if not player_icon.visible:
+		player_icon.visible = true
 	player_icon.position = world_to_map_px(world_pos) - player_icon.size * 0.5
 
 
@@ -131,9 +121,9 @@ func _on_enemy_positions_updated(positions: Dictionary) -> void:
 			if enemy_icon_scene == null or enemy_icons_container == null:
 				continue
 			var icon: Control = enemy_icon_scene.instantiate()
+			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			enemy_icons_container.add_child(icon)
 			_enemy_icons[id] = icon
-
 		var icon: Control = _enemy_icons[id]
 		icon.position = world_to_map_px(positions[id]) - icon.size * 0.5
 
@@ -158,7 +148,6 @@ func _on_game_ended(_won: bool) -> void:
 	if send_button:
 		send_button.disabled = true
 
-# ─── Send ─────────────────────────────────────────────────────────────────────
 
 func _on_send_pressed() -> void:
 	if maze_manager == null or chat_input == null:
